@@ -1,0 +1,318 @@
+@{
+    ViewData["Title"] = "Send Feedback";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb-enhanced">
+            <li><a asp-controller="Home" asp-action="Index"><i class="fas fa-home me-1"></i>Home</a></li>
+            <li><a asp-action="Help">Help</a></li>
+            <li class="current">Send Feedback</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Feedback Header -->
+            <div class="text-center mb-4">
+                <div class="mb-3">
+                    <i class="fas fa-comment-dots fa-4x text-primary opacity-75"></i>
+                </div>
+                <h1 class="h2 mb-2">We Value Your Feedback</h1>
+                <p class="text-muted">Help us improve the Mess Management System by sharing your thoughts and suggestions.</p>
+            </div>
+
+            <!-- Feedback Form -->
+            <div class="card-enhanced">
+                <div class="card-body-enhanced p-4">
+                    <form id="feedbackForm" class="needs-validation" method="post" asp-action="SubmitFeedback" novalidate>
+                        @Html.AntiForgeryToken()
+                        
+                        <!-- Rating Section -->
+                        <div class="form-group-enhanced">
+                            <label class="form-label-enhanced">
+                                <i class="fas fa-star text-warning me-1"></i>Overall Experience
+                                <span class="help-tooltip" data-help="Rate your overall experience using the system" tabindex="0">?</span>
+                            </label>
+                            <div class="rating-stars d-flex gap-2 mb-2" role="radiogroup" aria-label="Rating from 1 to 5 stars">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <button type="button" class="rating-star btn btn-outline-warning btn-lg" 
+                                            data-rating="@i" 
+                                            aria-label="@i star@(i > 1 ? "s" : "")"
+                                            role="radio"
+                                            aria-checked="false">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                }
+                            </div>
+                            <input type="hidden" name="Rating" id="ratingInput" required>
+                            <div class="rating-text text-muted small" id="ratingText">Click to rate</div>
+                        </div>
+
+                        <!-- Feedback Category -->
+                        <div class="form-group-enhanced">
+                            <label for="category" class="form-label-enhanced required">
+                                <i class="fas fa-folder me-1"></i>Feedback Category
+                            </label>
+                            <select id="category" name="Category" class="form-control-enhanced form-select" required>
+                                <option value="">Select a category</option>
+                                <option value="usability">Usability & Interface</option>
+                                <option value="features">Feature Request</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="performance">Performance</option>
+                                <option value="accessibility">Accessibility</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="form-help">What area does your feedback relate to?</span>
+                        </div>
+
+                        <!-- Feedback Title -->
+                        <div class="form-group-enhanced">
+                            <label for="title" class="form-label-enhanced required">
+                                <i class="fas fa-heading me-1"></i>Feedback Title
+                            </label>
+                            <input type="text" 
+                                   id="title" 
+                                   name="Title" 
+                                   class="form-control-enhanced" 
+                                   placeholder="Brief summary of your feedback"
+                                   required
+                                   minlength="5"
+                                   maxlength="100">
+                            <span class="form-help">Provide a brief, descriptive title</span>
+                        </div>
+
+                        <!-- Detailed Feedback -->
+                        <div class="form-group-enhanced">
+                            <label for="description" class="form-label-enhanced required">
+                                <i class="fas fa-align-left me-1"></i>Detailed Feedback
+                            </label>
+                            <textarea id="description" 
+                                      name="Description" 
+                                      class="form-control-enhanced" 
+                                      rows="5" 
+                                      placeholder="Please provide detailed feedback, including any specific issues, suggestions, or improvements you'd like to see..."
+                                      required
+                                      minlength="20"
+                                      maxlength="2000"></textarea>
+                            <div class="d-flex justify-content-between mt-1">
+                                <span class="form-help">Minimum 20 characters</span>
+                                <span class="text-muted small"><span id="charCount">0</span>/2000</span>
+                            </div>
+                        </div>
+
+                        <!-- Specific Questions for Usability Evaluation -->
+                        <div class="card-enhanced mb-4" style="background: var(--color-bg-tertiary);">
+                            <div class="card-body-enhanced">
+                                <h4 class="h6 mb-3">
+                                    <i class="fas fa-clipboard-list text-info me-2"></i>Quick Usability Survey (Optional)
+                                </h4>
+                                
+                                <div class="form-group-enhanced">
+                                    <label class="form-label-enhanced">How easy was it to navigate the system?</label>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        @foreach (var option in new[] { "Very Easy", "Easy", "Moderate", "Difficult", "Very Difficult" })
+                                        {
+                                            <label class="btn btn-outline-secondary btn-sm survey-option">
+                                                <input type="radio" name="NavigationEase" value="@option" class="d-none"> @option
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group-enhanced">
+                                    <label class="form-label-enhanced">Were you able to complete your tasks?</label>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        @foreach (var option in new[] { "Yes, easily", "Yes, with some difficulty", "Partially", "No" })
+                                        {
+                                            <label class="btn btn-outline-secondary btn-sm survey-option">
+                                                <input type="radio" name="TaskCompletion" value="@option" class="d-none"> @option
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group-enhanced mb-0">
+                                    <label class="form-label-enhanced">How would you rate the visual design?</label>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        @foreach (var option in new[] { "Excellent", "Good", "Average", "Poor", "Very Poor" })
+                                        {
+                                            <label class="btn btn-outline-secondary btn-sm survey-option">
+                                                <input type="radio" name="VisualDesign" value="@option" class="d-none"> @option
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Would Recommend -->
+                        <div class="form-group-enhanced">
+                            <label class="form-label-enhanced">
+                                <i class="fas fa-share-alt me-1"></i>Would you recommend this system to others?
+                            </label>
+                            <div class="d-flex gap-3">
+                                <label class="btn btn-outline-success survey-option">
+                                    <input type="radio" name="WouldRecommend" value="yes" class="d-none">
+                                    <i class="fas fa-thumbs-up me-1"></i>Yes
+                                </label>
+                                <label class="btn btn-outline-secondary survey-option">
+                                    <input type="radio" name="WouldRecommend" value="maybe" class="d-none">
+                                    <i class="fas fa-meh me-1"></i>Maybe
+                                </label>
+                                <label class="btn btn-outline-danger survey-option">
+                                    <input type="radio" name="WouldRecommend" value="no" class="d-none">
+                                    <i class="fas fa-thumbs-down me-1"></i>No
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Contact Preference -->
+                        <div class="form-group-enhanced">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="contactMe" name="ContactMe" value="true">
+                                <label class="form-check-label" for="contactMe">
+                                    I'd like to be contacted about my feedback
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex gap-3 justify-content-end mt-4">
+                            <a asp-action="Help" class="btn-enhanced btn-outline-enhanced">
+                                <i class="fas fa-arrow-left me-1"></i>Back to Help
+                            </a>
+                            <button type="submit" class="btn-enhanced btn-primary-enhanced" id="submitBtn">
+                                <i class="fas fa-paper-plane me-1"></i>Submit Feedback
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Privacy Notice -->
+            <div class="text-center mt-4">
+                <p class="text-muted small">
+                    <i class="fas fa-shield-alt me-1"></i>
+                    Your feedback is anonymous unless you opt to be contacted. 
+                    We use this information to improve the system.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .rating-star {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+
+    .rating-star:hover,
+    .rating-star.active {
+        background-color: var(--bs-warning);
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .rating-star.active ~ .rating-star {
+        background-color: transparent;
+        color: var(--bs-warning);
+    }
+
+    .survey-option {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .survey-option:has(input:checked) {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+    }
+
+    .survey-option:focus-within {
+        box-shadow: var(--focus-ring);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize form validation
+            FormValidator.init(document.getElementById('feedbackForm'));
+
+            // Star rating functionality
+            const ratingStars = document.querySelectorAll('.rating-star');
+            const ratingInput = document.getElementById('ratingInput');
+            const ratingText = document.getElementById('ratingText');
+            const ratingLabels = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+
+            ratingStars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    ratingInput.value = rating;
+                    ratingText.textContent = ratingLabels[rating];
+                    
+                    // Update visual state
+                    ratingStars.forEach((s, i) => {
+                        s.classList.toggle('active', i < rating);
+                        s.setAttribute('aria-checked', i < rating ? 'true' : 'false');
+                    });
+
+                    // Announce for screen readers
+                    A11yAnnouncer.announce(`Selected ${rating} stars: ${ratingLabels[rating]}`);
+                });
+
+                // Keyboard support
+                star.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            // Character counter
+            const description = document.getElementById('description');
+            const charCount = document.getElementById('charCount');
+            
+            description.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+
+            // Survey option selection
+            document.querySelectorAll('.survey-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const input = this.querySelector('input');
+                    const group = this.closest('.form-group-enhanced, .d-flex');
+                    
+                    // Deselect others in group
+                    group.querySelectorAll('.survey-option').forEach(o => {
+                        o.classList.remove('active');
+                    });
+                    
+                    input.checked = true;
+                    this.classList.add('active');
+                });
+            });
+
+            // Form submission with loading state
+            document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+                if (this.checkValidity()) {
+                    const submitBtn = document.getElementById('submitBtn');
+                    LoadingManager.showButton(submitBtn, 'Submitting...');
+                    
+                    // Show success toast after simulated delay
+                    setTimeout(() => {
+                        ToastManager.success('Thank you for your feedback! We appreciate your input.', 'Feedback Submitted');
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+}

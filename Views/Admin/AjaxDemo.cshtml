@@ -1,0 +1,493 @@
+@{
+    ViewData["Title"] = "AJAX Demo - No Page Refresh";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h5><i class="fas fa-sync-alt"></i> AJAX/Fetch Demo - Zero Page Refresh</h5>
+            <p class="mb-0">This page demonstrates all operations using AJAX/fetch without page refresh:</p>
+            <ul class="mb-0 mt-2">
+                <li><strong>Load Data</strong> - Fetch teachers list via API</li>
+                <li><strong>Search/Filter</strong> - Real-time client-side filtering</li>
+                <li><strong>Add</strong> - Create via AJAX POST</li>
+                <li><strong>Edit</strong> - Update via AJAX PUT</li>
+                <li><strong>Delete</strong> - Remove via AJAX DELETE</li>
+                <li><strong>Toast Notifications</strong> - Success/Error feedback</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Teachers List -->
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-users"></i> Teachers (Loaded via AJAX)</h5>
+                <button class="btn btn-light btn-sm" onclick="loadTeachers()">
+                    <i class="fas fa-refresh"></i> Refresh
+                </button>
+            </div>
+            <div class="card-body">
+                <!-- Search Box -->
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control" id="searchBox" placeholder="Search teachers..." oninput="filterTeachers()">
+                    <button class="btn btn-outline-secondary" type="button" onclick="clearSearch()">Clear</button>
+                </div>
+
+                <!-- Loading Skeleton -->
+                <div id="loadingSkeleton" style="display: none;">
+                    <div class="skeleton skeleton-text mb-2"></div>
+                    <div class="skeleton skeleton-text mb-2"></div>
+                    <div class="skeleton skeleton-text mb-2"></div>
+                </div>
+
+                <!-- Teachers Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover" id="teachersTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teachersBody">
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <i class="fas fa-users-slash"></i>
+                    <h5>No Teachers Found</h5>
+                    <p>Add a teacher using the form on the right.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Form -->
+    <div class="col-lg-4">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0" id="formTitle"><i class="fas fa-user-plus"></i> Quick Add Teacher</h5>
+            </div>
+            <div class="card-body">
+                <form id="teacherForm" novalidate>
+                    <input type="hidden" id="teacherId" value="">
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="fullName" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Phone <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="phone" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Department <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="department" required>
+                    </div>
+
+                    <div id="credentialsSection">
+                        <hr>
+                        <small class="text-muted">Login Credentials (for new teachers)</small>
+                        <div class="mb-3 mt-2">
+                            <label class="form-label fw-bold">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success" id="submitBtn">
+                            <span><i class="fas fa-save"></i> Save Teacher</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;" onclick="resetForm()">
+                            <i class="fas fa-times"></i> Cancel Edit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Quick Stats Card -->
+        <div class="card shadow mt-3">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0"><i class="fas fa-chart-bar"></i> Quick Stats</h6>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Total Teachers:</span>
+                    <strong id="statTotal">0</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Displayed:</span>
+                    <strong id="statDisplayed">0</strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Last Refresh:</span>
+                    <strong id="statLastRefresh">-</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="fas fa-trash"></i> Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deleteTeacherName"></strong>?</p>
+                <p class="text-danger"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <span><i class="fas fa-trash"></i> Delete</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Store teachers data
+    let teachersData = [];
+    let deleteTeacherId = null;
+    let isEditMode = false;
+
+    // Load teachers on page load
+    $(document).ready(function() {
+        loadTeachers();
+        
+        // Form submission
+        $('#teacherForm').on('submit', function(e) {
+            e.preventDefault();
+            if (isEditMode) {
+                updateTeacher();
+            } else {
+                addTeacher();
+            }
+        });
+
+        // Delete confirmation
+        $('#confirmDeleteBtn').on('click', function() {
+            deleteTeacher();
+        });
+    });
+
+    // Load teachers via AJAX (no page refresh)
+    async function loadTeachers() {
+        showLoading(true);
+        
+        try {
+            // Using fetch API
+            const response = await fetch('/api/TeachersApi', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 401) {
+                // For demo, load from MVC endpoint instead
+                loadTeachersFromMvc();
+                return;
+            }
+
+            const data = await response.json();
+            teachersData = data;
+            renderTeachers(data);
+            updateStats();
+            MessApp.showToast('Teachers loaded successfully!', 'success');
+        } catch (error) {
+            // Fallback to MVC
+            loadTeachersFromMvc();
+        }
+    }
+
+    // Fallback: Load from MVC (for when JWT not available)
+    function loadTeachersFromMvc() {
+        $.ajax({
+            url: '@Url.Action("GetTeachersJson", "Admin")',
+            method: 'GET',
+            success: function(data) {
+                teachersData = data;
+                renderTeachers(data);
+                updateStats();
+                showLoading(false);
+            },
+            error: function() {
+                showLoading(false);
+                $('#teachersBody').html(`
+                    <tr>
+                        <td colspan="5" class="text-center text-danger py-4">
+                            <i class="fas fa-exclamation-triangle"></i> Failed to load teachers
+                        </td>
+                    </tr>
+                `);
+            }
+        });
+    }
+
+    // Render teachers table (no page refresh)
+    function renderTeachers(teachers) {
+        showLoading(false);
+        
+        if (!teachers || teachers.length === 0) {
+            $('#teachersBody').html('');
+            $('#emptyState').show();
+            return;
+        }
+
+        $('#emptyState').hide();
+        let html = '';
+        teachers.forEach((teacher, index) => {
+            html += `
+                <tr class="fade-in" data-id="${teacher.teacherId}">
+                    <td>${index + 1}</td>
+                    <td><strong>${escapeHtml(teacher.fullName)}</strong></td>
+                    <td><a href="mailto:${escapeHtml(teacher.email)}">${escapeHtml(teacher.email)}</a></td>
+                    <td><span class="badge bg-info">${escapeHtml(teacher.department)}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="editTeacher(${teacher.teacherId})" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="confirmDeleteTeacher(${teacher.teacherId}, '${escapeHtml(teacher.fullName)}')" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        $('#teachersBody').html(html);
+        $('#statDisplayed').text(teachers.length);
+    }
+
+    // Filter teachers (client-side, no refresh)
+    function filterTeachers() {
+        const searchTerm = $('#searchBox').val().toLowerCase();
+        const filtered = teachersData.filter(t => 
+            t.fullName.toLowerCase().includes(searchTerm) ||
+            t.email.toLowerCase().includes(searchTerm) ||
+            t.department.toLowerCase().includes(searchTerm)
+        );
+        renderTeachers(filtered);
+    }
+
+    function clearSearch() {
+        $('#searchBox').val('');
+        renderTeachers(teachersData);
+    }
+
+    // Add teacher via AJAX (no page refresh)
+    function addTeacher() {
+        const btn = $('#submitBtn');
+        btn.addClass('btn-loading').prop('disabled', true);
+
+        const data = {
+            fullName: $('#fullName').val(),
+            email: $('#email').val(),
+            phoneNumber: $('#phone').val(),
+            department: $('#department').val(),
+            username: $('#username').val(),
+            password: $('#password').val()
+        };
+
+        $.ajax({
+            url: '@Url.Action("CreateTeacherAjax", "Admin")',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            headers: {
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+            },
+            success: function(response) {
+                btn.removeClass('btn-loading').prop('disabled', false);
+                
+                if (response.success) {
+                    MessApp.showToast('Teacher added successfully!', 'success');
+                    resetForm();
+                    // Add to local data and re-render (no page refresh!)
+                    teachersData.push(response.teacher);
+                    renderTeachers(teachersData);
+                    updateStats();
+                } else {
+                    MessApp.showToast(response.message || 'Failed to add teacher', 'error');
+                }
+            },
+            error: function(xhr) {
+                btn.removeClass('btn-loading').prop('disabled', false);
+                MessApp.showToast('Error adding teacher', 'error');
+            }
+        });
+    }
+
+    // Edit teacher (load into form, no page refresh)
+    function editTeacher(id) {
+        const teacher = teachersData.find(t => t.teacherId === id);
+        if (!teacher) return;
+
+        isEditMode = true;
+        $('#teacherId').val(teacher.teacherId);
+        $('#fullName').val(teacher.fullName);
+        $('#email').val(teacher.email);
+        $('#phone').val(teacher.phoneNumber);
+        $('#department').val(teacher.department);
+        
+        // Hide credentials section for edit
+        $('#credentialsSection').hide();
+        $('#formTitle').html('<i class="fas fa-edit"></i> Edit Teacher');
+        $('#submitBtn').html('<span><i class="fas fa-save"></i> Update Teacher</span>').removeClass('btn-success').addClass('btn-warning');
+        $('#cancelBtn').show();
+
+        // Scroll to form
+        $('html, body').animate({
+            scrollTop: $('#teacherForm').offset().top - 100
+        }, 300);
+
+        MessApp.showToast('Edit mode - modify and save', 'info');
+    }
+
+    // Update teacher via AJAX (no page refresh)
+    function updateTeacher() {
+        const btn = $('#submitBtn');
+        btn.addClass('btn-loading').prop('disabled', true);
+
+        const id = $('#teacherId').val();
+        const data = {
+            teacherId: parseInt(id),
+            fullName: $('#fullName').val(),
+            email: $('#email').val(),
+            phoneNumber: $('#phone').val(),
+            department: $('#department').val()
+        };
+
+        $.ajax({
+            url: '@Url.Action("UpdateTeacherAjax", "Admin")',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                btn.removeClass('btn-loading').prop('disabled', false);
+                
+                if (response.success) {
+                    MessApp.showToast('Teacher updated successfully!', 'success');
+                    // Update local data (no page refresh!)
+                    const index = teachersData.findIndex(t => t.teacherId === parseInt(id));
+                    if (index !== -1) {
+                        teachersData[index] = { ...teachersData[index], ...data };
+                    }
+                    renderTeachers(teachersData);
+                    resetForm();
+                } else {
+                    MessApp.showToast(response.message || 'Failed to update', 'error');
+                }
+            },
+            error: function() {
+                btn.removeClass('btn-loading').prop('disabled', false);
+                MessApp.showToast('Error updating teacher', 'error');
+            }
+        });
+    }
+
+    // Confirm delete (show modal, no refresh)
+    function confirmDeleteTeacher(id, name) {
+        deleteTeacherId = id;
+        $('#deleteTeacherName').text(name);
+        $('#deleteModal').modal('show');
+    }
+
+    // Delete teacher via AJAX (no page refresh)
+    function deleteTeacher() {
+        const btn = $('#confirmDeleteBtn');
+        btn.addClass('btn-loading').prop('disabled', true);
+
+        $.ajax({
+            url: '@Url.Action("DeleteTeacherAjax", "Admin")?id=' + deleteTeacherId,
+            method: 'POST',
+            success: function(response) {
+                btn.removeClass('btn-loading').prop('disabled', false);
+                $('#deleteModal').modal('hide');
+                
+                if (response.success) {
+                    MessApp.showToast('Teacher deleted successfully!', 'success');
+                    // Remove from local data (no page refresh!)
+                    teachersData = teachersData.filter(t => t.teacherId !== deleteTeacherId);
+                    renderTeachers(teachersData);
+                    updateStats();
+                } else {
+                    MessApp.showToast(response.message || 'Failed to delete', 'error');
+                }
+            },
+            error: function() {
+                btn.removeClass('btn-loading').prop('disabled', false);
+                $('#deleteModal').modal('hide');
+                MessApp.showToast('Error deleting teacher', 'error');
+            }
+        });
+    }
+
+    // Reset form
+    function resetForm() {
+        isEditMode = false;
+        $('#teacherId').val('');
+        $('#teacherForm')[0].reset();
+        $('#credentialsSection').show();
+        $('#formTitle').html('<i class="fas fa-user-plus"></i> Quick Add Teacher');
+        $('#submitBtn').html('<span><i class="fas fa-save"></i> Save Teacher</span>').removeClass('btn-warning').addClass('btn-success');
+        $('#cancelBtn').hide();
+        $('.form-control').removeClass('is-invalid is-valid');
+    }
+
+    // Update stats
+    function updateStats() {
+        $('#statTotal').text(teachersData.length);
+        $('#statDisplayed').text(teachersData.length);
+        $('#statLastRefresh').text(new Date().toLocaleTimeString());
+    }
+
+    // Show/hide loading
+    function showLoading(show) {
+        if (show) {
+            $('#loadingSkeleton').show();
+            $('#teachersTable').hide();
+        } else {
+            $('#loadingSkeleton').hide();
+            $('#teachersTable').show();
+        }
+    }
+
+    // Escape HTML
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+</script>
+}

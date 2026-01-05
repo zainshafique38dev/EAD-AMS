@@ -1,0 +1,151 @@
+@model MessManagementSystem.Models.Attendance
+
+@{
+    ViewData["Title"] = "Edit Attendance";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit"></i> Edit Attendance
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Teacher:</strong> @Model.Teacher?.FullName<br>
+                        <strong>Date:</strong> @Model.Date.ToString("dddd, MMMM dd, yyyy")<br>
+                        <strong>Department:</strong> @Model.Teacher?.Department
+                    </div>
+
+                    <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" name="id" value="@Model.AttendanceId" />
+                        <input type="hidden" name="returnDate" value="@ViewBag.ReturnDate" />
+                        @Html.AntiForgeryToken()
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0"><i class="fas fa-utensils"></i> Meal Selection</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted">
+                                    <i class="fas fa-lightbulb"></i> Select or unselect meals. At least one meal must be selected. 
+                                    To remove all meals, use the Delete option instead.
+                                </p>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card text-center h-100 @(Model.BreakfastTaken ? "border-success" : "")">
+                                            <div class="card-body">
+                                                <i class="fas fa-coffee fa-3x mb-3 text-warning"></i>
+                                                <h5 class="card-title">Breakfast</h5>
+                                                <div class="form-check form-switch d-flex justify-content-center">
+                                                    <input class="form-check-input" 
+                                                           type="checkbox" 
+                                                           name="breakfast" 
+                                                           id="breakfast" 
+                                                           value="true"
+                                                           @(Model.BreakfastTaken ? "checked" : "")
+                                                           style="width: 60px; height: 30px; cursor: pointer;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card text-center h-100 @(Model.LunchTaken ? "border-success" : "")">
+                                            <div class="card-body">
+                                                <i class="fas fa-hamburger fa-3x mb-3 text-danger"></i>
+                                                <h5 class="card-title">Lunch</h5>
+                                                <div class="form-check form-switch d-flex justify-content-center">
+                                                    <input class="form-check-input" 
+                                                           type="checkbox" 
+                                                           name="lunch" 
+                                                           id="lunch" 
+                                                           value="true"
+                                                           @(Model.LunchTaken ? "checked" : "")
+                                                           style="width: 60px; height: 30px; cursor: pointer;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card text-center h-100 @(Model.DinnerTaken ? "border-success" : "")">
+                                            <div class="card-body">
+                                                <i class="fas fa-pizza-slice fa-3x mb-3 text-success"></i>
+                                                <h5 class="card-title">Dinner</h5>
+                                                <div class="form-check form-switch d-flex justify-content-center">
+                                                    <input class="form-check-input" 
+                                                           type="checkbox" 
+                                                           name="dinner" 
+                                                           id="dinner" 
+                                                           value="true"
+                                                           @(Model.DinnerTaken ? "checked" : "")
+                                                           style="width: 60px; height: 30px; cursor: pointer;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-warning mt-3">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <strong>Important:</strong> If this attendance has an associated bill, the bill will be automatically adjusted based on your changes.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" asp-route-date="@ViewBag.ReturnDate" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Add visual feedback when toggling switches
+        document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var card = this.closest('.card');
+                if (this.checked) {
+                    card.classList.add('border-success');
+                } else {
+                    card.classList.remove('border-success');
+                }
+            });
+        });
+
+        // Form validation
+        (function() {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    var breakfast = document.getElementById('breakfast').checked;
+                    var lunch = document.getElementById('lunch').checked;
+                    var dinner = document.getElementById('dinner').checked;
+
+                    if (!breakfast && !lunch && !dinner) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        alert('⚠️ Please select at least one meal. To remove all meals, use the Delete option instead.');
+                        return false;
+                    }
+                }, false);
+            });
+        })();
+    </script>
+}

@@ -1,0 +1,243 @@
+@model IEnumerable<MessManagementSystem.Models.AttendanceDispute>
+
+@{
+    ViewData["Title"] = "My Dispute History";
+    var selectedStatus = ViewBag.SelectedStatus as string ?? "All";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li class="breadcrumb-item active">Dispute History</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-history"></i> My Attendance Dispute History
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>About Disputes:</strong> Here you can view all your reported attendance issues and their current status. 
+                        Admin responses and notes will be displayed for resolved disputes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Filter Tabs -->
+            <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link @(selectedStatus == "All" ? "active" : "")" 
+                       asp-action="ViewDisputeHistory" asp-route-status="All">
+                        <i class="fas fa-list"></i> All (@Model.Count())
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link @(selectedStatus == "Pending" ? "active" : "")" 
+                       asp-action="ViewDisputeHistory" asp-route-status="Pending">
+                        <i class="fas fa-clock"></i> Pending (@Model.Count(d => d.Status == "Pending"))
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link @(selectedStatus == "Approved" ? "active" : "")" 
+                       asp-action="ViewDisputeHistory" asp-route-status="Approved">
+                        <i class="fas fa-check-circle"></i> Approved (@Model.Count(d => d.Status == "Approved"))
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link @(selectedStatus == "Rejected" ? "active" : "")" 
+                       asp-action="ViewDisputeHistory" asp-route-status="Rejected">
+                        <i class="fas fa-times-circle"></i> Rejected (@Model.Count(d => d.Status == "Rejected"))
+                    </a>
+                </li>
+            </ul>
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="row">
+                    @foreach (var dispute in Model)
+                    {
+                        <div class="col-md-12 mb-3">
+                            <div class="card @(dispute.Status == "Approved" ? "border-success" : dispute.Status == "Rejected" ? "border-danger" : "border-warning")">
+                                <div class="card-header @(dispute.Status == "Approved" ? "bg-success text-white" : dispute.Status == "Rejected" ? "bg-danger text-white" : "bg-warning text-dark")">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <h5 class="mb-0">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                Dispute for @dispute.Attendance?.Date.ToString("dddd, MMMM dd, yyyy")
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            @if (dispute.Status == "Pending")
+                                            {
+                                                <span class="badge bg-light text-dark fs-6">
+                                                    <i class="fas fa-clock"></i> Pending Review
+                                                </span>
+                                            }
+                                            else if (dispute.Status == "Approved")
+                                            {
+                                                <span class="badge bg-light text-success fs-6">
+                                                    <i class="fas fa-check-circle"></i> Approved
+                                                </span>
+                                            }
+                                            else if (dispute.Status == "Rejected")
+                                            {
+                                                <span class="badge bg-light text-danger fs-6">
+                                                    <i class="fas fa-times-circle"></i> Rejected
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-utensils"></i> Attendance Details:</h6>
+                                            <div class="mb-2">
+                                                @if (dispute.Attendance?.BreakfastTaken == true)
+                                                {
+                                                    <span class="badge bg-warning text-dark me-1">
+                                                        <i class="fas fa-coffee"></i> Breakfast
+                                                    </span>
+                                                }
+                                                @if (dispute.Attendance?.LunchTaken == true)
+                                                {
+                                                    <span class="badge bg-danger me-1">
+                                                        <i class="fas fa-hamburger"></i> Lunch
+                                                    </span>
+                                                }
+                                                @if (dispute.Attendance?.DinnerTaken == true)
+                                                {
+                                                    <span class="badge bg-success me-1">
+                                                        <i class="fas fa-pizza-slice"></i> Dinner
+                                                    </span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-end">
+                                            <small class="text-muted">
+                                                <i class="fas fa-clock"></i> Reported: @dispute.ReportedDate.ToString("MMM dd, yyyy hh:mm tt")
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h6><i class="fas fa-comment-dots"></i> Your Reason:</h6>
+                                            <div class="alert alert-light mb-3">
+                                                <p class="mb-0">@dispute.Reason</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if (dispute.Status != "Pending")
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="alert @(dispute.Status == "Approved" ? "alert-success" : "alert-danger")">
+                                                    <h6>
+                                                        <i class="fas @(dispute.Status == "Approved" ? "fa-check-circle" : "fa-times-circle")"></i>
+                                                        Admin Response:
+                                                    </h6>
+                                                    @if (!string.IsNullOrEmpty(dispute.AdminNotes))
+                                                    {
+                                                        <p class="mb-2"><strong>Note:</strong> @dispute.AdminNotes</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="mb-2"><em>No additional notes provided by admin.</em></p>
+                                                    }
+                                                    <small class="text-muted">
+                                                        <i class="fas fa-user"></i> Resolved by: @(dispute.ResolvedByUser?.Username ?? "Admin") 
+                                                        | <i class="fas fa-calendar"></i> @dispute.ResolvedDate?.ToString("MMM dd, yyyy hh:mm tt")
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @if (dispute.Status == "Approved")
+                                        {
+                                            <div class="alert alert-info">
+                                                <i class="fas fa-info-circle"></i>
+                                                <strong>Action Taken:</strong> The attendance has been corrected and your bill has been adjusted accordingly.
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning">
+                                            <i class="fas fa-hourglass-half"></i>
+                                            <strong>Status:</strong> Your dispute is pending admin review. You will be notified once it's resolved.
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                    <h5 class="text-muted">No Disputes Found</h5>
+                    <p class="text-muted">
+                        @if (selectedStatus == "All")
+                        {
+                            <span>You haven't reported any attendance issues yet.</span>
+                        }
+                        else
+                        {
+                            <span>You don't have any @selectedStatus.ToLower() disputes.</span>
+                        }
+                    </p>
+                    <a asp-action="ReportWrongAttendance" class="btn btn-primary mt-3">
+                        <i class="fas fa-exclamation-circle"></i> Report Attendance Issue
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a asp-action="ReportWrongAttendance" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Report New Issue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

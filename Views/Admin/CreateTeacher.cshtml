@@ -1,0 +1,320 @@
+@model MessManagementSystem.Models.Teacher
+
+@{
+    ViewData["Title"] = "Add New Teacher";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-user-plus"></i> Add New Teacher
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fas fa-exclamation-triangle"></i> @ViewBag.Error
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @if (!ViewData.ModelState.IsValid && ViewBag.Error == null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fas fa-exclamation-triangle"></i> Please correct the following errors:
+                            <ul class="mb-0 mt-2">
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    <form asp-action="CreateTeacher" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-user"></i> Personal Information
+                                </h5>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="FullName" class="form-label">
+                                    <i class="fas fa-user"></i> Full Name <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="FullName" class="form-control" placeholder="Enter teacher's full name" required />
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Email" class="form-label">
+                                    <i class="fas fa-envelope"></i> Email Address <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Email" type="email" class="form-control" placeholder="teacher@example.com" required />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PhoneNumber" class="form-label">
+                                    <i class="fas fa-phone"></i> Phone Number <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="+1234567890" required />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="Department" class="form-label">
+                                    <i class="fas fa-building"></i> Department <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Department" class="form-control" placeholder="e.g., Mathematics, Physics, etc." required />
+                                <span asp-validation-for="Department" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <hr />
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-key"></i> Login Credentials
+                                </h5>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> Teacher will be required to change this password on first login.
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label">
+                                    <i class="fas fa-user-circle"></i> Username <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" id="username" name="username" class="form-control" 
+                                       placeholder="Choose a unique username" required />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock"></i> Default Password <span class="text-danger">*</span>
+                                </label>
+                                <input type="password" id="password" name="password" class="form-control" 
+                                       placeholder="Enter default password" required minlength="6" />
+                                <small class="text-muted">Minimum 6 characters</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="ManageTeachers" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                <span><i class="fas fa-save"></i> Save Teacher</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function() {
+            // Real-time email validation
+            $('#Email').on('blur', function() {
+                const email = $(this).val();
+                if (email && !isValidEmail(email)) {
+                    showFieldError($(this), 'Please enter a valid email address');
+                } else {
+                    clearFieldError($(this));
+                }
+            });
+
+            // Real-time phone validation
+            $('#PhoneNumber').on('blur', function() {
+                const phone = $(this).val();
+                if (phone && !isValidPhone(phone)) {
+                    showFieldError($(this), 'Please enter a valid phone number');
+                } else {
+                    clearFieldError($(this));
+                }
+            });
+
+            // Password strength indicator
+            $('#password').on('input', function() {
+                const password = $(this).val();
+                updatePasswordStrength(password);
+            });
+
+            // Form submission with AJAX
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                
+                if (!validateForm()) {
+                    return false;
+                }
+
+                const form = $(this);
+                const submitBtn = $('#submitBtn');
+                
+                // Show loading state
+                submitBtn.addClass('btn-loading').prop('disabled', true);
+
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (typeof response === 'string' && response.includes('ManageTeachers')) {
+                            MessApp.showToast('Teacher created successfully!', 'success');
+                            setTimeout(function() {
+                                window.location.href = '@Url.Action("ManageTeachers", "Admin")';
+                            }, 1000);
+                        } else {
+                            window.location.href = '@Url.Action("ManageTeachers", "Admin")';
+                        }
+                    },
+                    error: function(xhr) {
+                        submitBtn.removeClass('btn-loading').prop('disabled', false);
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            showServerErrors(xhr.responseJSON.errors);
+                        } else {
+                            MessApp.showToast('An error occurred. Please try again.', 'error');
+                        }
+                    }
+                });
+            });
+
+            function validateForm() {
+                let isValid = true;
+                
+                // Clear previous errors
+                $('.form-control').removeClass('is-invalid');
+                $('.invalid-feedback').remove();
+                
+                // Required fields
+                const requiredFields = ['FullName', 'Email', 'PhoneNumber', 'Department', 'username', 'password'];
+                requiredFields.forEach(function(field) {
+                    const input = $('#' + field + ', [name="' + field + '"]').first();
+                    if (!input.val() || input.val().trim() === '') {
+                        showFieldError(input, 'This field is required');
+                        isValid = false;
+                    }
+                });
+
+                // Email validation
+                const email = $('#Email').val();
+                if (email && !isValidEmail(email)) {
+                    showFieldError($('#Email'), 'Please enter a valid email address');
+                    isValid = false;
+                }
+
+                // Password length
+                const password = $('#password').val();
+                if (password && password.length < 6) {
+                    showFieldError($('#password'), 'Password must be at least 6 characters');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            function isValidEmail(email) {
+                return /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(email);
+            }
+
+            function isValidPhone(phone) {
+                return /^[\d\s\-\+\(\)]{10,}$/.test(phone);
+            }
+
+            function showFieldError(field, message) {
+                field.addClass('is-invalid');
+                if (!field.next('.invalid-feedback').length) {
+                    field.after('<div class="invalid-feedback">' + message + '</div>');
+                }
+            }
+
+            function clearFieldError(field) {
+                field.removeClass('is-invalid');
+                field.next('.invalid-feedback').remove();
+            }
+
+            function showServerErrors(errors) {
+                for (const key in errors) {
+                    const field = $('#' + key + ', [name="' + key + '"]').first();
+                    if (field.length) {
+                        showFieldError(field, errors[key].join(', '));
+                    }
+                }
+            }
+
+            function updatePasswordStrength(password) {
+                let strength = 0;
+                if (password.length >= 6) strength++;
+                if (password.length >= 10) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+                const strengthText = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+                const strengthClass = ['danger', 'warning', 'warning', 'info', 'success'];
+                
+                let indicator = $('#password-strength');
+                if (!indicator.length) {
+                    $('#password').parent().append('<small id="password-strength" class="mt-1 d-block"></small>');
+                    indicator = $('#password-strength');
+                }
+                
+                if (password.length > 0) {
+                    indicator.html('<span class="text-' + strengthClass[strength] + '">Password Strength: ' + strengthText[strength] + '</span>');
+                } else {
+                    indicator.empty();
+                }
+            }
+
+            // Clear error on input
+            $('.form-control').on('input', function() {
+                clearFieldError($(this));
+            });
+        });
+    </script>
+}
+
+<style>
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        padding: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px 15px;
+        border: 2px solid #e0e0e0;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+
+    .btn-lg {
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+</style>

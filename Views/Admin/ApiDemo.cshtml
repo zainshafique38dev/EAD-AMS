@@ -1,0 +1,287 @@
+@{
+    ViewData["Title"] = "API Demo";
+}
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="alert alert-info">
+            <h5><i class="fas fa-info-circle"></i> JWT API Demo</h5>
+            <p class="mb-0">This page demonstrates:</p>
+            <ul class="mb-0 mt-2">
+                <li>JWT token authentication with login</li>
+                <li>AJAX/fetch() calls to protected API endpoints</li>
+                <li>Client-side + Server-side form validation</li>
+                <li>Role-based access (Admin-only and Teacher-only endpoints)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Login Form with Validation -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-sign-in-alt"></i> API Login (Get JWT Token)</h5>
+            </div>
+            <div class="card-body">
+                <form id="loginForm" novalidate>
+                    <div class="mb-3">
+                        <label for="apiUsername" class="form-label fw-bold">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="apiUsername" required minlength="3" maxlength="50">
+                        <div class="invalid-feedback">Username is required (3-50 characters)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apiPassword" class="form-label fw-bold">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="apiPassword" required minlength="6">
+                        <div class="invalid-feedback">Password is required (min 6 characters)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apiRole" class="form-label fw-bold">Role <span class="text-danger">*</span></label>
+                        <select class="form-select" id="apiRole" required>
+                            <option value="">-- Select Role --</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Teacher">Teacher</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a role</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="loginBtn">
+                        <i class="fas fa-key"></i> Get JWT Token
+                    </button>
+                </form>
+                
+                <div id="tokenResult" class="mt-3" style="display:none;">
+                    <hr>
+                    <h6 class="text-success"><i class="fas fa-check-circle"></i> Login Successful!</h6>
+                    <div class="bg-light p-2 rounded">
+                        <small class="text-muted">JWT Token (stored in memory):</small>
+                        <textarea class="form-control mt-1" id="tokenDisplay" rows="3" readonly></textarea>
+                    </div>
+                    <div class="mt-2">
+                        <span class="badge bg-info" id="roleDisplay"></span>
+                        <span class="badge bg-secondary" id="userDisplay"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Test Buttons -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-flask"></i> Test API Endpoints</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Click buttons below to test JWT-protected API endpoints:</p>
+                
+                <div class="d-grid gap-2 mb-3">
+                    <button class="btn btn-outline-primary" onclick="testEndpoint('/api/demo/whoami')" id="btnWhoami">
+                        <i class="fas fa-user"></i> /api/demo/whoami (Admin or Teacher)
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="testEndpoint('/api/demo/admin-stats')" id="btnAdmin">
+                        <i class="fas fa-shield-alt"></i> /api/demo/admin-stats (Admin Only)
+                    </button>
+                    <button class="btn btn-outline-success" onclick="testEndpoint('/api/demo/teacher-profile')" id="btnTeacher">
+                        <i class="fas fa-chalkboard-teacher"></i> /api/demo/teacher-profile (Teacher Only)
+                    </button>
+                </div>
+                
+                <hr>
+                <h6><i class="fas fa-code"></i> API Response:</h6>
+                <pre id="apiResponse" class="bg-dark text-light p-3 rounded" style="min-height: 150px; max-height: 300px; overflow-y: auto;">
+Click a button above to test API endpoints.
+First, login to get a JWT token.</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Code Examples -->
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="fas fa-code"></i> JavaScript Code Example (fetch API)</h5>
+            </div>
+            <div class="card-body">
+                <pre class="bg-light p-3 rounded"><code>// 1. Login to get JWT token
+const response = await fetch('/api/authapi/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'admin', password: 'admin123', role: 'Admin' })
+});
+const data = await response.json();
+const token = data.token;
+
+// 2. Call protected API endpoint with JWT token
+const apiResponse = await fetch('/api/demo/admin-stats', {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
+});
+
+// 3. Handle response
+if (apiResponse.status === 401) {
+    console.log('Unauthorized - Invalid or missing token');
+} else if (apiResponse.status === 403) {
+    console.log('Forbidden - User does not have required role');
+} else {
+    const result = await apiResponse.json();
+    console.log(result);
+}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Store JWT token in memory (not localStorage for demo)
+    let jwtToken = null;
+
+    // Form validation and submission
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Client-side validation
+        const form = this;
+        const username = document.getElementById('apiUsername');
+        const password = document.getElementById('apiPassword');
+        const role = document.getElementById('apiRole');
+        
+        // Reset validation states
+        form.querySelectorAll('.form-control, .form-select').forEach(el => {
+            el.classList.remove('is-invalid', 'is-valid');
+        });
+        
+        let isValid = true;
+        
+        // Validate username
+        if (!username.value || username.value.length < 3) {
+            username.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            username.classList.add('is-valid');
+        }
+        
+        // Validate password
+        if (!password.value || password.value.length < 6) {
+            password.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            password.classList.add('is-valid');
+        }
+        
+        // Validate role
+        if (!role.value) {
+            role.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            role.classList.add('is-valid');
+        }
+        
+        if (!isValid) {
+            return;
+        }
+        
+        // Show loading state
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+        
+        try {
+            // Make API call with fetch
+            const response = await fetch('/api/authapi/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username.value,
+                    password: password.value,
+                    role: role.value
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Store token
+                jwtToken = data.token;
+                
+                // Show success
+                document.getElementById('tokenResult').style.display = 'block';
+                document.getElementById('tokenDisplay').value = data.token;
+                document.getElementById('roleDisplay').textContent = 'Role: ' + data.role;
+                document.getElementById('userDisplay').textContent = 'User: ' + data.username;
+                
+                document.getElementById('apiResponse').textContent = 
+                    'Login successful!\n\nToken received. You can now test the API endpoints.';
+                document.getElementById('apiResponse').className = 'bg-success text-light p-3 rounded';
+            } else {
+                // Server-side validation error or auth failure
+                document.getElementById('apiResponse').textContent = 
+                    'Error ' + response.status + ':\n' + JSON.stringify(data, null, 2);
+                document.getElementById('apiResponse').className = 'bg-danger text-light p-3 rounded';
+            }
+        } catch (error) {
+            document.getElementById('apiResponse').textContent = 'Network Error: ' + error.message;
+            document.getElementById('apiResponse').className = 'bg-danger text-light p-3 rounded';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-key"></i> Get JWT Token';
+        }
+    });
+
+    // Test API endpoints
+    async function testEndpoint(url) {
+        const responseEl = document.getElementById('apiResponse');
+        
+        if (!jwtToken) {
+            responseEl.textContent = 'Error: No JWT token!\n\nPlease login first to get a token.';
+            responseEl.className = 'bg-warning text-dark p-3 rounded';
+            return;
+        }
+        
+        responseEl.textContent = 'Loading...';
+        responseEl.className = 'bg-secondary text-light p-3 rounded';
+        
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + jwtToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            let statusClass = 'bg-dark';
+            if (response.status === 200) statusClass = 'bg-success';
+            else if (response.status === 401) statusClass = 'bg-danger';
+            else if (response.status === 403) statusClass = 'bg-warning text-dark';
+            
+            responseEl.textContent = 
+                'HTTP ' + response.status + ' ' + response.statusText + '\n' +
+                'Endpoint: ' + url + '\n\n' +
+                JSON.stringify(data, null, 2);
+            responseEl.className = statusClass + ' text-light p-3 rounded';
+            
+        } catch (error) {
+            responseEl.textContent = 'Network Error: ' + error.message;
+            responseEl.className = 'bg-danger text-light p-3 rounded';
+        }
+    }
+
+    // Real-time validation feedback
+    document.querySelectorAll('#loginForm input, #loginForm select').forEach(el => {
+        el.addEventListener('input', function() {
+            this.classList.remove('is-invalid', 'is-valid');
+        });
+    });
+</script>
+}

@@ -1,0 +1,931 @@
+@{
+    ViewData["Title"] = "Project Requirements & User Research";
+}
+
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card-enhanced" style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; border: none;">
+                <div class="card-body-enhanced py-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="h2 mb-2">
+                                <i class="fas fa-clipboard-list me-2"></i>Requirements & User Research
+                            </h1>
+                            <p class="mb-0 opacity-75">
+                                Human-Computer Interaction Analysis for Mess Management System
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <span class="badge bg-light text-dark fs-6 px-3 py-2">
+                                <i class="fas fa-calendar me-1"></i>January 2026
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs mb-4" id="requirementsTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">
+                <i class="fas fa-users me-1"></i>Primary Users
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="requirements-tab" data-bs-toggle="tab" data-bs-target="#requirements" type="button" role="tab" aria-controls="requirements" aria-selected="false">
+                <i class="fas fa-tasks me-1"></i>Requirements
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="personas-tab" data-bs-toggle="tab" data-bs-target="#personas" type="button" role="tab" aria-controls="personas" aria-selected="false">
+                <i class="fas fa-user-tag me-1"></i>Personas
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="stories-tab" data-bs-toggle="tab" data-bs-target="#stories" type="button" role="tab" aria-controls="stories" aria-selected="false">
+                <i class="fas fa-book-open me-1"></i>User Stories
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="scenarios-tab" data-bs-toggle="tab" data-bs-target="#scenarios" type="button" role="tab" aria-controls="scenarios" aria-selected="false">
+                <i class="fas fa-route me-1"></i>Usage Scenarios
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="requirementsTabContent">
+        <!-- Primary Users Tab -->
+        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+            <div class="row">
+                <!-- Admin User -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced h-100">
+                        <div class="card-header-enhanced" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: white;">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-user-shield me-2"></i>Administrator (Primary User)
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-primary">Role Description</h5>
+                                <p class="text-muted">
+                                    The mess administrator is responsible for managing the entire meal attendance system, 
+                                    including recording daily meal consumption, managing teacher records, generating bills, 
+                                    and handling disputes.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-primary">Key Responsibilities</h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Mark daily attendance for breakfast, lunch, and dinner</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Manage teacher profiles and accounts</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Generate and manage monthly bills</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Review and resolve attendance disputes</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Configure meal pricing and system settings</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Generate reports and analytics</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-primary">Technical Proficiency</h5>
+                                <div class="progress-enhanced mb-2" style="height: 20px;">
+                                    <div class="progress-bar-enhanced" style="width: 65%;">Moderate</div>
+                                </div>
+                                <small class="text-muted">Basic computer skills, familiar with web applications</small>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-semibold text-primary">Access Level</h5>
+                                <span class="badge-enhanced badge-danger">Full System Access</span>
+                                <span class="badge-enhanced badge-info">Configuration Rights</span>
+                                <span class="badge-enhanced badge-warning">Financial Data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher User -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced h-100">
+                        <div class="card-header-enhanced" style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%); color: white;">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-chalkboard-teacher me-2"></i>Teacher (Primary User)
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-success">Role Description</h5>
+                                <p class="text-muted">
+                                    Teachers are the end-users who consume meals at the mess facility. They need to 
+                                    view their attendance records, check their bills, and report any discrepancies 
+                                    in their meal records.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-success">Key Activities</h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>View personal meal attendance history</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Check monthly bills and payment status</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Report incorrect attendance entries</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Track dispute resolution status</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>View mess menu</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Make bill payments online</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-success">Technical Proficiency</h5>
+                                <div class="progress-enhanced mb-2" style="height: 20px;">
+                                    <div class="progress-bar-enhanced" style="width: 50%; background: var(--color-success);">Basic to Moderate</div>
+                                </div>
+                                <small class="text-muted">Varies from basic to advanced, smartphone-literate</small>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-semibold text-success">Access Level</h5>
+                                <span class="badge-enhanced badge-success">Personal Data Only</span>
+                                <span class="badge-enhanced badge-info">Read-Only Menu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Statistics -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced">
+                            <h4 class="h5 mb-0"><i class="fas fa-chart-pie text-primary me-2"></i>User Demographics & Usage Patterns</h4>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="row">
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="stat-value text-primary">50+</div>
+                                    <div class="stat-label">Total Teachers</div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="stat-value text-success">2-3</div>
+                                    <div class="stat-label">Administrators</div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="stat-value text-warning">3x/day</div>
+                                    <div class="stat-label">Meal Sessions</div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="stat-value text-info">Monthly</div>
+                                    <div class="stat-label">Billing Cycle</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements Tab -->
+        <div class="tab-pane fade" id="requirements" role="tabpanel" aria-labelledby="requirements-tab">
+            <div class="row">
+                <!-- Functional Requirements -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced h-100">
+                        <div class="card-header-enhanced bg-primary text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-cogs me-2"></i>Functional Requirements
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="accordion" id="functionalReqs">
+                                <!-- FR1: Authentication -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#fr1">
+                                            <span class="badge bg-primary me-2">FR-1</span>Authentication & Authorization
+                                        </button>
+                                    </h2>
+                                    <div id="fr1" class="accordion-collapse collapse show" data-bs-parent="#functionalReqs">
+                                        <div class="accordion-body">
+                                            <ul class="mb-0">
+                                                <li>Secure login with username/password</li>
+                                                <li>Role-based access control (Admin, Teacher)</li>
+                                                <li>Session management and timeout</li>
+                                                <li>Password change functionality</li>
+                                                <li>JWT token-based API authentication</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FR2: Attendance Management -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fr2">
+                                            <span class="badge bg-primary me-2">FR-2</span>Attendance Management
+                                        </button>
+                                    </h2>
+                                    <div id="fr2" class="accordion-collapse collapse" data-bs-parent="#functionalReqs">
+                                        <div class="accordion-body">
+                                            <ul class="mb-0">
+                                                <li>Mark attendance for breakfast, lunch, dinner</li>
+                                                <li>View attendance by date and teacher</li>
+                                                <li>Edit/delete attendance records</li>
+                                                <li>Bulk attendance marking</li>
+                                                <li>Automated daily attendance initialization</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FR3: Teacher Management -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fr3">
+                                            <span class="badge bg-primary me-2">FR-3</span>Teacher Management
+                                        </button>
+                                    </h2>
+                                    <div id="fr3" class="accordion-collapse collapse" data-bs-parent="#functionalReqs">
+                                        <div class="accordion-body">
+                                            <ul class="mb-0">
+                                                <li>Add/edit/deactivate teacher profiles</li>
+                                                <li>Assign user accounts to teachers</li>
+                                                <li>View teacher details and history</li>
+                                                <li>Department-wise categorization</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FR4: Billing -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fr4">
+                                            <span class="badge bg-primary me-2">FR-4</span>Billing & Payments
+                                        </button>
+                                    </h2>
+                                    <div id="fr4" class="accordion-collapse collapse" data-bs-parent="#functionalReqs">
+                                        <div class="accordion-body">
+                                            <ul class="mb-0">
+                                                <li>Automated monthly bill generation</li>
+                                                <li>Configurable meal pricing</li>
+                                                <li>View bill details and breakdown</li>
+                                                <li>Online payment integration</li>
+                                                <li>Payment history tracking</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FR5: Disputes -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fr5">
+                                            <span class="badge bg-primary me-2">FR-5</span>Dispute Management
+                                        </button>
+                                    </h2>
+                                    <div id="fr5" class="accordion-collapse collapse" data-bs-parent="#functionalReqs">
+                                        <div class="accordion-body">
+                                            <ul class="mb-0">
+                                                <li>Submit attendance disputes</li>
+                                                <li>Track dispute status</li>
+                                                <li>Admin review and resolution</li>
+                                                <li>Automatic bill adjustment</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FR6: Reports -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fr6">
+                                            <span class="badge bg-primary me-2">FR-6</span>Reports & Analytics
+                                        </button>
+                                    </h2>
+                                    <div id="fr6" class="accordion-collapse collapse" data-bs-parent="#functionalReqs">
+                                        <div class="accordion-body">
+                                            <ul class="mb-0">
+                                                <li>Monthly attendance reports</li>
+                                                <li>Meal consumption statistics</li>
+                                                <li>Financial summary reports</li>
+                                                <li>Export to PDF/Excel</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Non-Functional Requirements -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced h-100">
+                        <div class="card-header-enhanced bg-success text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-shield-alt me-2"></i>Non-Functional Requirements
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-4 p-3 rounded" style="background: var(--color-bg-tertiary);">
+                                <h5 class="fw-semibold"><i class="fas fa-tachometer-alt text-info me-2"></i>Performance (NFR-1)</h5>
+                                <ul class="mb-0 text-muted">
+                                    <li>Page load time < 3 seconds</li>
+                                    <li>Support 50+ concurrent users</li>
+                                    <li>Database queries < 500ms</li>
+                                    <li>API response time < 1 second</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4 p-3 rounded" style="background: var(--color-bg-tertiary);">
+                                <h5 class="fw-semibold"><i class="fas fa-lock text-danger me-2"></i>Security (NFR-2)</h5>
+                                <ul class="mb-0 text-muted">
+                                    <li>Password hashing (BCrypt)</li>
+                                    <li>HTTPS encryption</li>
+                                    <li>SQL injection prevention</li>
+                                    <li>XSS protection</li>
+                                    <li>CSRF token validation</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4 p-3 rounded" style="background: var(--color-bg-tertiary);">
+                                <h5 class="fw-semibold"><i class="fas fa-universal-access text-warning me-2"></i>Accessibility (NFR-3)</h5>
+                                <ul class="mb-0 text-muted">
+                                    <li>WCAG 2.1 AA compliance</li>
+                                    <li>Keyboard navigation support</li>
+                                    <li>Screen reader compatibility</li>
+                                    <li>Color contrast ratio ≥ 4.5:1</li>
+                                    <li>Focus indicators visible</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4 p-3 rounded" style="background: var(--color-bg-tertiary);">
+                                <h5 class="fw-semibold"><i class="fas fa-mobile-alt text-primary me-2"></i>Usability (NFR-4)</h5>
+                                <ul class="mb-0 text-muted">
+                                    <li>Responsive design (mobile, tablet, desktop)</li>
+                                    <li>Intuitive navigation (≤3 clicks to any feature)</li>
+                                    <li>Clear error messages</li>
+                                    <li>Consistent UI patterns</li>
+                                    <li>Help documentation available</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-3 rounded" style="background: var(--color-bg-tertiary);">
+                                <h5 class="fw-semibold"><i class="fas fa-server text-success me-2"></i>Reliability (NFR-5)</h5>
+                                <ul class="mb-0 text-muted">
+                                    <li>99.5% uptime availability</li>
+                                    <li>Automatic data backup</li>
+                                    <li>Error logging and monitoring</li>
+                                    <li>Graceful error handling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personas Tab -->
+        <div class="tab-pane fade" id="personas" role="tabpanel" aria-labelledby="personas-tab">
+            <div class="row">
+                <!-- Admin Persona -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-body-enhanced">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px; font-size: 32px;">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h4 mb-1">Rajesh Kumar</h3>
+                                    <p class="text-muted mb-0">Mess Administrator</p>
+                                    <span class="badge-enhanced badge-info">Primary Persona - Admin</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Age</small>
+                                    <strong>42 years</strong>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Experience</small>
+                                    <strong>15 years in administration</strong>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-primary">Background</h5>
+                                <p class="text-muted small">
+                                    Rajesh has been managing the college mess for 8 years. He previously used paper registers 
+                                    and Excel sheets for tracking attendance. He is moderately comfortable with technology 
+                                    and uses smartphones daily.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-primary">Goals</h5>
+                                <ul class="small text-muted">
+                                    <li>Quickly mark attendance during meal times without delays</li>
+                                    <li>Generate accurate bills with minimal manual calculation</li>
+                                    <li>Resolve disputes fairly and maintain good relations with teachers</li>
+                                    <li>Reduce paperwork and manual data entry</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-danger">Pain Points</h5>
+                                <ul class="small text-muted">
+                                    <li>Paper-based system prone to errors and loss</li>
+                                    <li>Manual bill calculations time-consuming</li>
+                                    <li>Difficult to track historical data</li>
+                                    <li>Handling disputes without proper records</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-semibold text-success">Technology Usage</h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary">WhatsApp</span>
+                                    <span class="badge bg-secondary">MS Excel</span>
+                                    <span class="badge bg-secondary">Basic Email</span>
+                                    <span class="badge bg-secondary">Calculator Apps</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher Persona 1 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-body-enhanced">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px; font-size: 32px;">
+                                    <i class="fas fa-female"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h4 mb-1">Dr. Priya Sharma</h3>
+                                    <p class="text-muted mb-0">Associate Professor, Computer Science</p>
+                                    <span class="badge-enhanced badge-success">Primary Persona - Teacher</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Age</small>
+                                    <strong>35 years</strong>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Tech Comfort</small>
+                                    <strong>High</strong>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-success">Background</h5>
+                                <p class="text-muted small">
+                                    Dr. Priya is a tech-savvy professor who prefers digital solutions. She has a busy 
+                                    schedule with classes, research, and administrative duties. She frequently 
+                                    accesses systems via her smartphone between classes.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-success">Goals</h5>
+                                <ul class="small text-muted">
+                                    <li>Quickly check attendance records on mobile</li>
+                                    <li>Receive timely bill notifications</li>
+                                    <li>Easy online payment options</li>
+                                    <li>Report discrepancies immediately when noticed</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-danger">Pain Points</h5>
+                                <ul class="small text-muted">
+                                    <li>No visibility into attendance until bill arrives</li>
+                                    <li>Disputes take too long to resolve</li>
+                                    <li>No mobile-friendly access to records</li>
+                                    <li>Manual payment process inconvenient</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-semibold text-info">Technology Usage</h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary">iPhone</span>
+                                    <span class="badge bg-secondary">MacBook</span>
+                                    <span class="badge bg-secondary">Online Banking</span>
+                                    <span class="badge bg-secondary">Google Workspace</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher Persona 2 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-body-enhanced">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px; font-size: 32px;">
+                                    <i class="fas fa-male"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h4 mb-1">Prof. Venkat Rao</h3>
+                                    <p class="text-muted mb-0">Senior Professor, Mathematics</p>
+                                    <span class="badge-enhanced badge-warning">Secondary Persona - Teacher</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Age</small>
+                                    <strong>58 years</strong>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Tech Comfort</small>
+                                    <strong>Low to Moderate</strong>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold" style="color: var(--color-warning-dark);">Background</h5>
+                                <p class="text-muted small">
+                                    Prof. Rao is a senior faculty member who prefers traditional methods. He uses 
+                                    technology reluctantly and often asks younger colleagues for help with digital 
+                                    systems. He values simplicity and clear instructions.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold" style="color: var(--color-warning-dark);">Goals</h5>
+                                <ul class="small text-muted">
+                                    <li>Simple interface with large, clear buttons</li>
+                                    <li>Minimal steps to complete any task</li>
+                                    <li>Clear confirmation of actions taken</li>
+                                    <li>Easy access to help when stuck</li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold text-danger">Pain Points</h5>
+                                <ul class="small text-muted">
+                                    <li>Complex interfaces with too many options</li>
+                                    <li>Small text and buttons difficult to use</li>
+                                    <li>Confusing error messages</li>
+                                    <li>Forgetting passwords frequently</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h5 class="fw-semibold text-info">Technology Usage</h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary">Basic Android Phone</span>
+                                    <span class="badge bg-secondary">Desktop Computer</span>
+                                    <span class="badge bg-secondary">WhatsApp Calls</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Needs Summary -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced h-100">
+                        <div class="card-header-enhanced">
+                            <h4 class="h5 mb-0"><i class="fas fa-lightbulb text-warning me-2"></i>Common User Needs Summary</h4>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-4">
+                                <h6 class="fw-semibold">All Users Need:</h6>
+                                <ul class="text-muted small">
+                                    <li><i class="fas fa-check text-success me-2"></i>Quick access to relevant information</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Clear visual feedback for actions</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Mobile-responsive interface</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Secure authentication</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Help/documentation when stuck</li>
+                                </ul>
+                            </div>
+                            <div class="mb-4">
+                                <h6 class="fw-semibold">Admins Specifically Need:</h6>
+                                <ul class="text-muted small">
+                                    <li><i class="fas fa-check text-primary me-2"></i>Efficient bulk operations</li>
+                                    <li><i class="fas fa-check text-primary me-2"></i>Comprehensive reporting tools</li>
+                                    <li><i class="fas fa-check text-primary me-2"></i>Easy configuration options</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h6 class="fw-semibold">Teachers Specifically Need:</h6>
+                                <ul class="text-muted small">
+                                    <li><i class="fas fa-check text-success me-2"></i>Self-service access to records</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Dispute reporting mechanism</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Payment convenience</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Stories Tab -->
+        <div class="tab-pane fade" id="stories" role="tabpanel" aria-labelledby="stories-tab">
+            <div class="row">
+                <!-- Admin User Stories -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced bg-primary text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-user-shield me-2"></i>Admin User Stories
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            @{
+                                var adminStories = new[] {
+                                    ("US-A01", "Mark Attendance", "As an admin, I want to mark meal attendance for all teachers quickly, so that I can complete the task during busy meal times without delays.", "High"),
+                                    ("US-A02", "View Dashboard", "As an admin, I want to see a dashboard with today's statistics, so that I can get an overview of the mess operations at a glance.", "High"),
+                                    ("US-A03", "Manage Teachers", "As an admin, I want to add, edit, and deactivate teacher profiles, so that I can keep the teacher database up to date.", "High"),
+                                    ("US-A04", "Generate Bills", "As an admin, I want to generate monthly bills automatically, so that I don't have to calculate each teacher's bill manually.", "High"),
+                                    ("US-A05", "Resolve Disputes", "As an admin, I want to review and resolve attendance disputes, so that teachers' concerns are addressed fairly.", "Medium"),
+                                    ("US-A06", "Configure Pricing", "As an admin, I want to configure meal prices, so that billing reflects current costs.", "Medium"),
+                                    ("US-A07", "View Reports", "As an admin, I want to generate attendance reports, so that I can analyze consumption patterns.", "Medium")
+                                };
+                            }
+                            @foreach (var story in adminStories)
+                            {
+                                <div class="mb-3 p-3 rounded border-start border-4 @(story.Item4 == "High" ? "border-danger" : "border-warning")" style="background: var(--color-bg-tertiary);">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge bg-primary">@story.Item1</span>
+                                        <span class="badge @(story.Item4 == "High" ? "bg-danger" : "bg-warning")">@story.Item4 Priority</span>
+                                    </div>
+                                    <h6 class="fw-semibold mb-2">@story.Item2</h6>
+                                    <p class="small text-muted mb-0">@story.Item3</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher User Stories -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced bg-success text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-chalkboard-teacher me-2"></i>Teacher User Stories
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            @{
+                                var teacherStories = new[] {
+                                    ("US-T01", "View Attendance", "As a teacher, I want to view my meal attendance history, so that I can verify the records before the bill is generated.", "High"),
+                                    ("US-T02", "View Bills", "As a teacher, I want to view my monthly bills with a detailed breakdown, so that I understand what I'm being charged for.", "High"),
+                                    ("US-T03", "Report Wrong Attendance", "As a teacher, I want to report incorrect attendance entries, so that my bill reflects only the meals I actually consumed.", "High"),
+                                    ("US-T04", "Track Disputes", "As a teacher, I want to track the status of my disputes, so that I know when they are resolved.", "Medium"),
+                                    ("US-T05", "Make Payment", "As a teacher, I want to pay my bills online, so that I don't have to visit the office physically.", "Medium"),
+                                    ("US-T06", "View Menu", "As a teacher, I want to see the daily/weekly menu, so that I can decide whether to take meals.", "Low"),
+                                    ("US-T07", "Change Password", "As a teacher, I want to change my password, so that I can maintain account security.", "Medium")
+                                };
+                            }
+                            @foreach (var story in teacherStories)
+                            {
+                                <div class="mb-3 p-3 rounded border-start border-4 @(story.Item4 == "High" ? "border-danger" : story.Item4 == "Medium" ? "border-warning" : "border-info")" style="background: var(--color-bg-tertiary);">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="badge bg-success">@story.Item1</span>
+                                        <span class="badge @(story.Item4 == "High" ? "bg-danger" : story.Item4 == "Medium" ? "bg-warning" : "bg-info")">@story.Item4 Priority</span>
+                                    </div>
+                                    <h6 class="fw-semibold mb-2">@story.Item2</h6>
+                                    <p class="small text-muted mb-0">@story.Item3</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Scenarios Tab -->
+        <div class="tab-pane fade" id="scenarios" role="tabpanel" aria-labelledby="scenarios-tab">
+            <div class="row">
+                <!-- Scenario 1: Daily Attendance -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced bg-info text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-clock me-2"></i>Scenario 1: Daily Attendance Marking
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-3">
+                                <span class="badge bg-primary mb-2">Actor: Admin</span>
+                                <span class="badge bg-secondary mb-2">Time: Meal Hours</span>
+                            </div>
+
+                            <h6 class="fw-semibold">Context</h6>
+                            <p class="small text-muted">
+                                It's lunchtime (12:30 PM) and Rajesh needs to mark attendance for 45 teachers 
+                                who are having lunch in the mess.
+                            </p>
+
+                            <h6 class="fw-semibold">Steps</h6>
+                            <ol class="small text-muted">
+                                <li>Rajesh logs into the system on the mess counter computer</li>
+                                <li>Navigates to Attendance → Today's date is auto-selected</li>
+                                <li>Sees list of all teachers with checkbox for Lunch</li>
+                                <li>As each teacher comes, clicks their "Lunch" checkbox</li>
+                                <li>System shows visual confirmation (green checkmark)</li>
+                                <li>After meal hour, reviews the count and saves</li>
+                            </ol>
+
+                            <h6 class="fw-semibold">Success Criteria</h6>
+                            <ul class="small text-muted">
+                                <li><i class="fas fa-check text-success me-2"></i>Attendance marked for all 45 teachers in under 15 minutes</li>
+                                <li><i class="fas fa-check text-success me-2"></i>No duplicate entries</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Clear visual feedback for each action</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario 2: Viewing and Disputing -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced bg-warning text-dark">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Scenario 2: Reporting Wrong Attendance
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-3">
+                                <span class="badge bg-success mb-2">Actor: Teacher</span>
+                                <span class="badge bg-secondary mb-2">Time: Any time</span>
+                            </div>
+
+                            <h6 class="fw-semibold">Context</h6>
+                            <p class="small text-muted">
+                                Dr. Priya notices that her attendance shows lunch taken on Monday, 
+                                but she was at a conference that day and didn't eat in the mess.
+                            </p>
+
+                            <h6 class="fw-semibold">Steps</h6>
+                            <ol class="small text-muted">
+                                <li>Dr. Priya logs in on her phone during a break</li>
+                                <li>Goes to "View Attendance" and selects the date</li>
+                                <li>Notices incorrect lunch entry for Monday</li>
+                                <li>Clicks "Report Issue" button next to the entry</li>
+                                <li>Selects "Lunch" and provides reason: "Was at conference"</li>
+                                <li>Submits the dispute and sees confirmation</li>
+                                <li>Checks "Dispute History" to track status</li>
+                            </ol>
+
+                            <h6 class="fw-semibold">Success Criteria</h6>
+                            <ul class="small text-muted">
+                                <li><i class="fas fa-check text-success me-2"></i>Dispute submitted in under 2 minutes</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Clear confirmation message shown</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Dispute appears in history immediately</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario 3: Monthly Billing -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced bg-success text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-file-invoice-dollar me-2"></i>Scenario 3: Monthly Bill Generation
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-3">
+                                <span class="badge bg-primary mb-2">Actor: Admin</span>
+                                <span class="badge bg-secondary mb-2">Time: Month End</span>
+                            </div>
+
+                            <h6 class="fw-semibold">Context</h6>
+                            <p class="small text-muted">
+                                It's the 1st of the month and Rajesh needs to generate bills for 
+                                all teachers for the previous month.
+                            </p>
+
+                            <h6 class="fw-semibold">Steps</h6>
+                            <ol class="small text-muted">
+                                <li>Rajesh logs in and goes to Billing section</li>
+                                <li>Clicks "Generate Bills" for previous month</li>
+                                <li>System calculates totals based on attendance records</li>
+                                <li>Reviews the bill summary for all teachers</li>
+                                <li>Confirms and generates bills</li>
+                                <li>System creates individual bills for each teacher</li>
+                            </ol>
+
+                            <h6 class="fw-semibold">Success Criteria</h6>
+                            <ul class="small text-muted">
+                                <li><i class="fas fa-check text-success me-2"></i>All 50 bills generated in under 1 minute</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Calculations match attendance records</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Teachers can view their bills immediately</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario 4: Bill Payment -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card-enhanced">
+                        <div class="card-header-enhanced bg-danger text-white">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-credit-card me-2"></i>Scenario 4: Online Bill Payment
+                            </h3>
+                        </div>
+                        <div class="card-body-enhanced">
+                            <div class="mb-3">
+                                <span class="badge bg-success mb-2">Actor: Teacher</span>
+                                <span class="badge bg-secondary mb-2">Time: Bill Due Date</span>
+                            </div>
+
+                            <h6 class="fw-semibold">Context</h6>
+                            <p class="small text-muted">
+                                Prof. Rao receives a notification that his mess bill is due. 
+                                He wants to pay it online from home.
+                            </p>
+
+                            <h6 class="fw-semibold">Steps</h6>
+                            <ol class="small text-muted">
+                                <li>Prof. Rao logs in from his desktop computer</li>
+                                <li>Dashboard shows "1 Unpaid Bill" prominently</li>
+                                <li>Clicks on the bill to see details</li>
+                                <li>Reviews breakdown (15 breakfast, 20 lunch, 18 dinner)</li>
+                                <li>Clicks "Pay Now" button</li>
+                                <li>Selects payment method (UPI/Card)</li>
+                                <li>Completes payment and receives confirmation</li>
+                            </ol>
+
+                            <h6 class="fw-semibold">Success Criteria</h6>
+                            <ul class="small text-muted">
+                                <li><i class="fas fa-check text-success me-2"></i>Payment completed in under 3 minutes</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Clear receipt/confirmation provided</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Bill status updated immediately</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    
+    .nav-tabs .nav-link {
+        color: var(--color-text-secondary);
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 1rem 1.5rem;
+    }
+    
+    .nav-tabs .nav-link:hover {
+        border-color: var(--color-border);
+        color: var(--color-primary);
+    }
+    
+    .nav-tabs .nav-link.active {
+        color: var(--color-primary);
+        border-bottom-color: var(--color-primary);
+        font-weight: 600;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: var(--color-primary-bg);
+        color: var(--color-primary);
+    }
+
+    .accordion-button:focus {
+        box-shadow: var(--focus-ring);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Initialize tooltips and accessibility announcements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Announce tab changes for screen readers
+            document.querySelectorAll('#requirementsTabs button').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function(e) {
+                    const tabName = e.target.textContent.trim();
+                    if (typeof A11yAnnouncer !== 'undefined') {
+                        A11yAnnouncer.announce('Viewing ' + tabName + ' section');
+                    }
+                });
+            });
+        });
+    </script>
+}

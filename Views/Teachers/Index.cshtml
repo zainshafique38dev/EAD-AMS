@@ -1,0 +1,304 @@
+@model MessManagementSystem.Models.Teacher
+
+@{
+    ViewData["Title"] = "Teacher Dashboard";
+    var monthlyAttendance = ViewBag.MonthlyAttendance as List<MessManagementSystem.Models.Attendance>;
+    var unpaidBills = ViewBag.UnpaidBills as List<MessManagementSystem.Models.Bill>;
+}
+
+<div class="container-fluid">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm bg-gradient" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body text-white p-4">
+                    <h2 class="mb-2"><i class="fas fa-user-circle"></i> Welcome, @Model.FullName!</h2>
+                    <p class="mb-0"><i class="fas fa-envelope"></i> @Model.Email | <i class="fas fa-phone"></i> @Model.PhoneNumber</p>
+                    <p class="mb-0"><i class="fas fa-building"></i> @Model.Department</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-primary mb-2">
+                        <i class="fas fa-calendar-check fa-3x"></i>
+                    </div>
+                    <h3 class="mb-0">@monthlyAttendance?.Count</h3>
+                    <p class="text-muted mb-0">Days Present This Month</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-success mb-2">
+                        <i class="fas fa-utensils fa-3x"></i>
+                    </div>
+                    <h3 class="mb-0">@ViewBag.TotalMeals</h3>
+                    <p class="text-muted mb-0">Total Meals This Month</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-warning mb-2">
+                        <i class="fas fa-file-invoice-dollar fa-3x"></i>
+                    </div>
+                    <h3 class="mb-0">@unpaidBills?.Count</h3>
+                    <p class="text-muted mb-0">Unpaid Bills</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-danger mb-2">
+                        <i class="fas fa-rupee-sign fa-3x"></i>
+                    </div>
+                    <h3 class="mb-0">₹@(Model.Bills?.Where(b => !b.IsPaid).Sum(b => b.TotalBill) ?? 0)</h3>
+                    <p class="text-muted mb-0">Total Pending Amount</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-bolt"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-action="ViewAttendance" class="btn btn-outline-primary w-100 py-3">
+                                <i class="fas fa-calendar-alt fa-2x d-block mb-2"></i>
+                                View Attendance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-action="VerifyAttendance" class="btn btn-outline-warning w-100 py-3">
+                                <i class="fas fa-exclamation-triangle fa-2x d-block mb-2"></i>
+                                Report Wrong Attendance
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-action="ViewDisputeHistory" class="btn btn-outline-info w-100 py-3">
+                                <i class="fas fa-history fa-2x d-block mb-2"></i>
+                                Dispute History
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-action="ViewBills" class="btn btn-outline-success w-100 py-3">
+                                <i class="fas fa-file-invoice fa-2x d-block mb-2"></i>
+                                View Bills
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-outline-secondary w-100 py-3">
+                                <i class="fas fa-key fa-2x d-block mb-2"></i>
+                                Change Password
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Attendance -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-history"></i> Recent Attendance (Current Month)</h5>
+                </div>
+                <div class="card-body">
+                    @if (monthlyAttendance != null && monthlyAttendance.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Breakfast</th>
+                                        <th>Lunch</th>
+                                        <th>Dinner</th>
+                                        <th>Total Meals</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var attendance in monthlyAttendance.Take(10))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <strong>@attendance.Date.ToString("MMM dd, yyyy")</strong><br />
+                                                <small class="text-muted">@attendance.Date.DayOfWeek</small>
+                                            </td>
+                                            <td>
+                                                @if (attendance.BreakfastTaken)
+                                                {
+                                                    <span class="badge bg-success"><i class="fas fa-check"></i> Yes</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary"><i class="fas fa-times"></i> No</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (attendance.LunchTaken)
+                                                {
+                                                    <span class="badge bg-success"><i class="fas fa-check"></i> Yes</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary"><i class="fas fa-times"></i> No</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (attendance.DinnerTaken)
+                                                {
+                                                    <span class="badge bg-success"><i class="fas fa-check"></i> Yes</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary"><i class="fas fa-times"></i> No</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <strong>@((attendance.BreakfastTaken ? 1 : 0) + (attendance.LunchTaken ? 1 : 0) + (attendance.DinnerTaken ? 1 : 0))</strong>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-danger" 
+                                                        onclick="confirmDelete(@attendance.AttendanceId, '@attendance.Date.ToString("MMM dd, yyyy")')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a asp-action="ViewAttendance" class="btn btn-primary">
+                                <i class="fas fa-list"></i> View All Attendance
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> No attendance records found for this month.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Unpaid Bills -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-circle"></i> Pending Bills</h5>
+                </div>
+                <div class="card-body">
+                    @if (unpaidBills != null && unpaidBills.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var bill in unpaidBills.Take(5))
+                            {
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(bill.Month) @bill.Year</h6>
+                                            <p class="mb-0 text-muted small">Meals: @bill.TotalMealsConsumed</p>
+                                        </div>
+                                        <div class="text-end">
+                                            <strong class="text-danger">₹@bill.TotalBill</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="text-center mt-3">
+                            <a asp-action="ViewBills" class="btn btn-warning">
+                                <i class="fas fa-file-invoice-dollar"></i> View All Bills
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> No pending bills. You're all paid up!
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Delete Attendance Record
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="deleteForm" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Warning:</strong> This action will delete your attendance record and adjust your bill accordingly.
+                    </div>
+                    <ul>
+                        <li>If the bill is <strong>unpaid</strong>, your bill amount will be reduced.</li>
+                        <li>If the bill is <strong>already paid</strong>, you'll receive a credit applied to your next bill.</li>
+                    </ul>
+                    <p id="deleteMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete(attendanceId, date) {
+            document.getElementById('deleteForm').action = '@Url.Action("DeleteAttendance", "Teachers")/' + attendanceId + '?returnAction=Index';
+            document.getElementById('deleteMessage').innerHTML = 'Are you sure you want to delete your attendance for <strong>' + date + '</strong>?';
+            var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+        }
+    </script>
+}

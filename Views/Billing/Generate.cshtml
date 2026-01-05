@@ -1,0 +1,150 @@
+@model MessManagementSystem.Models.Teacher
+
+@{
+    ViewData["Title"] = "Generate Bill";
+    var selectedMonth = ViewBag.SelectedMonth ?? DateTime.Now.Month;
+    var selectedYear = ViewBag.SelectedYear ?? DateTime.Now.Year;
+    var teachers = ViewBag.Teachers as List<MessManagementSystem.Models.Teacher>;
+    var selectedTeacherId = ViewBag.SelectedTeacherId as int?;
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Bills</a></li>
+                    <li class="breadcrumb-item active">Generate Bill</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-file-invoice-dollar"></i> Generate Monthly Bill</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Note:</strong> Select a teacher and billing period. The bill will include:
+                        <ul class="mb-0 mt-2">
+                            <li>Food charges based on attendance records</li>
+                            <li>Water bill (shared equally among all active teachers)</li>
+                            <li>Previous unpaid balance (if any)</li>
+                        </ul>
+                    </div>
+
+                    <form asp-action="Generate" method="post">
+                        @Html.AntiForgeryToken()
+                        
+                        <div class="mb-4">
+                            <label for="teacherId" class="form-label fw-bold">
+                                <i class="fas fa-user"></i> Select Teacher <span class="text-danger">*</span>
+                            </label>
+                            <select name="teacherId" id="teacherId" class="form-select form-select-lg" required>
+                                <option value="">-- Choose a Teacher --</option>
+                                @if (teachers != null)
+                                {
+                                    foreach (var teacher in teachers)
+                                    {
+                                        <option value="@teacher.TeacherId" selected="@(teacher.TeacherId == selectedTeacherId)">
+                                            @teacher.FullName (@teacher.Email) - @teacher.Department
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <small class="text-muted">Select the teacher for whom you want to generate the bill</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="month" class="form-label fw-bold">
+                                    <i class="fas fa-calendar-alt"></i> Select Month <span class="text-danger">*</span>
+                                </label>
+                                <select name="month" id="month" class="form-select" required>
+                                    @for (int i = 1; i <= 12; i++)
+                                    {
+                                        <option value="@i" selected="@(i == (int)selectedMonth)">
+                                            @(new DateTime((int)selectedYear, i, 1).ToString("MMMM"))
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="year" class="form-label fw-bold">
+                                    <i class="fas fa-calendar"></i> Select Year <span class="text-danger">*</span>
+                                </label>
+                                <select name="year" id="year" class="form-select" required>
+                                    @for (int y = DateTime.Now.Year - 2; y <= DateTime.Now.Year + 1; y++)
+                                    {
+                                        <option value="@y" selected="@(y == (int)selectedYear)">@y</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calculator"></i> Generate Bill
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Bills
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Information Card -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0"><i class="fas fa-question-circle"></i> How it Works</h6>
+                </div>
+                <div class="card-body">
+                    <ol class="mb-0">
+                        <li class="mb-2"><strong>Select Teacher:</strong> Choose the teacher from the dropdown (shows active teachers only)</li>
+                        <li class="mb-2"><strong>Choose Period:</strong> Select the month and year for which you want to generate the bill</li>
+                        <li class="mb-2"><strong>Generate:</strong> The system will calculate:
+                            <ul class="mt-1">
+                                <li>Food bill based on meals consumed (from attendance records)</li>
+                                <li>Water bill per teacher (Total water bill ÷ Number of active teachers)</li>
+                                <li>Any previous unpaid balance will be carried forward</li>
+                            </ul>
+                        </li>
+                        <li class="mb-0"><strong>Update:</strong> If a bill already exists for that period, it will be updated with new calculations</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Add visual feedback when teacher is selected
+        document.getElementById('teacherId').addEventListener('change', function() {
+            if (this.value) {
+                this.classList.add('border-success');
+                this.classList.remove('border-danger');
+            } else {
+                this.classList.add('border-danger');
+                this.classList.remove('border-success');
+            }
+        });
+    </script>
+}

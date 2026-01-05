@@ -1,0 +1,167 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MessManagementSystem
+build_property.RootNamespace = MessManagementSystem
+build_property.ProjectDir = C:\Users\zains\Desktop\MESS MANAGEMENT SYSTEM\Mess Management System\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\zains\Desktop\MESS MANAGEMENT SYSTEM\Mess Management System
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/AjaxDemo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWpheERlbW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/ApiDemo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQXBpRGVtby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/CreateTeacher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlVGVhY2hlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/EditTeacher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFRlYWNoZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/FormValidationDemo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRm9ybVZhbGlkYXRpb25EZW1vLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/ManageDisputes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlRGlzcHV0ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/ManageTeachers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlVGVhY2hlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/ProjectRequirements.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUHJvamVjdFJlcXVpcmVtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/ViewDispute.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0Rpc3B1dGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Admin/ViewTeacherDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld1RlYWNoZXJEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Attendance/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Attendance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Attendance/Report.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxSZXBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Billing/Configuration.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbGluZ1xDb25maWd1cmF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Billing/Generate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbGluZ1xHZW5lcmF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Billing/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbGluZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Menu/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Menu/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Menu/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Shared/Feedback.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEZlZWRiYWNrLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Shared/Help.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEhlbHAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/BillDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcQmlsbERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/MakePayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcTWFrZVBheW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/ReportWrongAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcUmVwb3J0V3JvbmdBdHRlbmRhbmNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/VerifyAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcVmVyaWZ5QXR0ZW5kYW5jZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/ViewAttendance.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcVmlld0F0dGVuZGFuY2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/ViewBills.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcVmlld0JpbGxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/Teachers/ViewDisputeHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcVmlld0Rpc3B1dGVIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/zains/Desktop/MESS MANAGEMENT SYSTEM/Mess Management System/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

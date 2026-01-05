@@ -1,0 +1,463 @@
+@{
+    ViewData["Title"] = "Help & Documentation";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb-enhanced">
+            <li><a asp-controller="Home" asp-action="Index"><i class="fas fa-home me-1"></i>Home</a></li>
+            <li class="current">Help & Documentation</li>
+        </ol>
+    </nav>
+
+    <!-- Help Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card-enhanced" style="background: linear-gradient(135deg, var(--color-info) 0%, var(--color-info-dark) 100%); color: white; border: none;">
+                <div class="card-body-enhanced py-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="h2 mb-2">
+                                <i class="fas fa-question-circle me-2"></i>Help Center
+                            </h1>
+                            <p class="mb-0 opacity-75">
+                                Find answers to common questions and learn how to use the Mess Management System effectively.
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <div class="input-group" style="max-width: 300px; margin-left: auto;">
+                                <input type="text" class="form-control" placeholder="Search help topics..." aria-label="Search help topics">
+                                <button class="btn btn-light" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="quick-actions">
+                <a href="#getting-started" class="quick-action-card">
+                    <div class="quick-action-icon" style="background: var(--color-primary-bg); color: var(--color-primary);">
+                        <i class="fas fa-rocket fa-lg"></i>
+                    </div>
+                    <span class="quick-action-title">Getting Started</span>
+                    <span class="quick-action-description">New user guide</span>
+                </a>
+                <a href="#attendance" class="quick-action-card">
+                    <div class="quick-action-icon" style="background: var(--color-success-bg); color: var(--color-success);">
+                        <i class="fas fa-calendar-check fa-lg"></i>
+                    </div>
+                    <span class="quick-action-title">Attendance</span>
+                    <span class="quick-action-description">How to manage meals</span>
+                </a>
+                <a href="#billing" class="quick-action-card">
+                    <div class="quick-action-icon" style="background: var(--color-warning-bg); color: var(--color-warning);">
+                        <i class="fas fa-file-invoice-dollar fa-lg"></i>
+                    </div>
+                    <span class="quick-action-title">Billing</span>
+                    <span class="quick-action-description">Payment information</span>
+                </a>
+                <a href="#disputes" class="quick-action-card">
+                    <div class="quick-action-icon" style="background: var(--color-danger-bg); color: var(--color-danger);">
+                        <i class="fas fa-exclamation-triangle fa-lg"></i>
+                    </div>
+                    <span class="quick-action-title">Disputes</span>
+                    <span class="quick-action-description">Report issues</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Getting Started Section -->
+            <section id="getting-started" class="mb-4">
+                <div class="card-enhanced">
+                    <div class="card-header-enhanced">
+                        <h2 class="h5 mb-0">
+                            <i class="fas fa-rocket text-primary me-2"></i>Getting Started
+                        </h2>
+                    </div>
+                    <div class="card-body-enhanced">
+                        <div class="onboarding-steps mb-4">
+                            <div class="onboarding-step completed">
+                                <span class="onboarding-step-number"><i class="fas fa-check"></i></span>
+                                <span class="onboarding-step-title">Create Account</span>
+                            </div>
+                            <div class="onboarding-step completed">
+                                <span class="onboarding-step-number"><i class="fas fa-check"></i></span>
+                                <span class="onboarding-step-title">Login</span>
+                            </div>
+                            <div class="onboarding-step active">
+                                <span class="onboarding-step-number">3</span>
+                                <span class="onboarding-step-title">Explore Dashboard</span>
+                            </div>
+                            <div class="onboarding-step">
+                                <span class="onboarding-step-number">4</span>
+                                <span class="onboarding-step-title">View Attendance</span>
+                            </div>
+                        </div>
+
+                        <div class="accordion" id="gettingStartedAccordion">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true">
+                                        <i class="fas fa-user-plus me-2"></i>How do I log in to the system?
+                                    </button>
+                                </h3>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#gettingStartedAccordion">
+                                    <div class="accordion-body">
+                                        <ol>
+                                            <li>Navigate to the login page</li>
+                                            <li>Enter your username (usually your email)</li>
+                                            <li>Enter your password provided by the administrator</li>
+                                            <li>Click "Login" to access your dashboard</li>
+                                        </ol>
+                                        <div class="alert-enhanced alert-info-enhanced mt-3">
+                                            <i class="fas fa-lightbulb alert-icon"></i>
+                                            <div class="alert-content">
+                                                <div class="alert-message">First time logging in? Contact your administrator if you haven't received your credentials.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        <i class="fas fa-tachometer-alt me-2"></i>Understanding your Dashboard
+                                    </button>
+                                </h3>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#gettingStartedAccordion">
+                                    <div class="accordion-body">
+                                        <p>Your dashboard provides a quick overview of:</p>
+                                        <ul>
+                                            <li><strong>Statistics Cards:</strong> Shows your attendance and billing summary</li>
+                                            <li><strong>Quick Actions:</strong> Fast access to common tasks</li>
+                                            <li><strong>Recent Activity:</strong> Your latest attendance records</li>
+                                            <li><strong>Pending Bills:</strong> Bills awaiting payment</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance Section -->
+            <section id="attendance" class="mb-4">
+                <div class="card-enhanced">
+                    <div class="card-header-enhanced">
+                        <h2 class="h5 mb-0">
+                            <i class="fas fa-calendar-check text-success me-2"></i>Attendance Management
+                        </h2>
+                    </div>
+                    <div class="card-body-enhanced">
+                        <div class="accordion" id="attendanceAccordion">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#att1">
+                                        <i class="fas fa-eye me-2"></i>How do I view my attendance?
+                                    </button>
+                                </h3>
+                                <div id="att1" class="accordion-collapse collapse" data-bs-parent="#attendanceAccordion">
+                                    <div class="accordion-body">
+                                        <ol>
+                                            <li>Click on "View Attendance" from the Quick Actions or sidebar</li>
+                                            <li>Select the month and year you want to view</li>
+                                            <li>Your meal records (Breakfast, Lunch, Dinner) will be displayed</li>
+                                            <li>Use the filter options to narrow down results</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#att2">
+                                        <i class="fas fa-utensils me-2"></i>How is attendance marked?
+                                    </button>
+                                </h3>
+                                <div id="att2" class="accordion-collapse collapse" data-bs-parent="#attendanceAccordion">
+                                    <div class="accordion-body">
+                                        <p>Attendance is marked by the mess administrator:</p>
+                                        <ul>
+                                            <li><strong>Breakfast:</strong> Marked during morning hours (7:00 AM - 9:00 AM)</li>
+                                            <li><strong>Lunch:</strong> Marked during afternoon (12:00 PM - 2:00 PM)</li>
+                                            <li><strong>Dinner:</strong> Marked in the evening (7:00 PM - 9:00 PM)</li>
+                                        </ul>
+                                        <div class="d-flex gap-3 mt-3">
+                                            <span class="meal-status taken"><i class="fas fa-check"></i> Taken</span>
+                                            <span class="meal-status not-taken"><i class="fas fa-times"></i> Not Taken</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Billing Section -->
+            <section id="billing" class="mb-4">
+                <div class="card-enhanced">
+                    <div class="card-header-enhanced">
+                        <h2 class="h5 mb-0">
+                            <i class="fas fa-file-invoice-dollar text-warning me-2"></i>Billing & Payments
+                        </h2>
+                    </div>
+                    <div class="card-body-enhanced">
+                        <div class="accordion" id="billingAccordion">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bill1">
+                                        <i class="fas fa-calculator me-2"></i>How is my bill calculated?
+                                    </button>
+                                </h3>
+                                <div id="bill1" class="accordion-collapse collapse" data-bs-parent="#billingAccordion">
+                                    <div class="accordion-body">
+                                        <p>Your monthly bill is calculated based on:</p>
+                                        <ul>
+                                            <li>Number of <strong>Breakfasts</strong> taken × Breakfast rate</li>
+                                            <li>Number of <strong>Lunches</strong> taken × Lunch rate</li>
+                                            <li>Number of <strong>Dinners</strong> taken × Dinner rate</li>
+                                        </ul>
+                                        <p><strong>Total Bill = Sum of all meal costs</strong></p>
+                                        <div class="alert-enhanced alert-info-enhanced mt-3">
+                                            <i class="fas fa-info-circle alert-icon"></i>
+                                            <div class="alert-content">
+                                                <div class="alert-message">Current meal rates can be found in the billing section or ask your administrator.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bill2">
+                                        <i class="fas fa-credit-card me-2"></i>How do I pay my bills?
+                                    </button>
+                                </h3>
+                                <div id="bill2" class="accordion-collapse collapse" data-bs-parent="#billingAccordion">
+                                    <div class="accordion-body">
+                                        <ol>
+                                            <li>Go to "View Bills" from Quick Actions</li>
+                                            <li>Click "View Details" on the bill you want to pay</li>
+                                            <li>Click "Make Payment" button</li>
+                                            <li>Choose your preferred payment method</li>
+                                            <li>Complete the payment process</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Disputes Section -->
+            <section id="disputes" class="mb-4">
+                <div class="card-enhanced">
+                    <div class="card-header-enhanced">
+                        <h2 class="h5 mb-0">
+                            <i class="fas fa-exclamation-triangle text-danger me-2"></i>Reporting Issues
+                        </h2>
+                    </div>
+                    <div class="card-body-enhanced">
+                        <div class="accordion" id="disputesAccordion">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp1">
+                                        <i class="fas fa-flag me-2"></i>How do I report wrong attendance?
+                                    </button>
+                                </h3>
+                                <div id="disp1" class="accordion-collapse collapse" data-bs-parent="#disputesAccordion">
+                                    <div class="accordion-body">
+                                        <ol>
+                                            <li>Click "Report Issue" from Quick Actions</li>
+                                            <li>Select the date with incorrect attendance</li>
+                                            <li>Specify which meal(s) are incorrect</li>
+                                            <li>Provide a detailed reason for the dispute</li>
+                                            <li>Submit the dispute for review</li>
+                                        </ol>
+                                        <div class="alert-enhanced alert-warning-enhanced mt-3">
+                                            <i class="fas fa-clock alert-icon"></i>
+                                            <div class="alert-content">
+                                                <div class="alert-title">Processing Time</div>
+                                                <div class="alert-message">Disputes are typically reviewed within 2-3 business days.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#disp2">
+                                        <i class="fas fa-history me-2"></i>How do I track my disputes?
+                                    </button>
+                                </h3>
+                                <div id="disp2" class="accordion-collapse collapse" data-bs-parent="#disputesAccordion">
+                                    <div class="accordion-body">
+                                        <p>You can track your disputes in the "Dispute History" section:</p>
+                                        <ul>
+                                            <li><span class="badge-enhanced badge-warning">Pending</span> - Awaiting review</li>
+                                            <li><span class="badge-enhanced badge-success">Approved</span> - Dispute accepted, attendance corrected</li>
+                                            <li><span class="badge-enhanced badge-danger">Rejected</span> - Dispute denied with reason</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Contact Support -->
+            <div class="card-enhanced mb-4">
+                <div class="card-header-enhanced">
+                    <h3 class="h6 mb-0">
+                        <i class="fas fa-headset text-primary me-2"></i>Contact Support
+                    </h3>
+                </div>
+                <div class="card-body-enhanced">
+                    <p class="text-muted small mb-3">Can't find what you're looking for? Contact us!</p>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span>support@messmanagement.com</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span>+91 1234567890</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fas fa-clock text-primary"></i>
+                            <span>Mon-Fri, 9:00 AM - 5:00 PM</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <a asp-action="Feedback" class="btn-enhanced btn-primary-enhanced w-100">
+                        <i class="fas fa-comment-alt me-1"></i>Send Feedback
+                    </a>
+                </div>
+            </div>
+
+            <!-- Keyboard Shortcuts -->
+            <div class="card-enhanced mb-4">
+                <div class="card-header-enhanced">
+                    <h3 class="h6 mb-0">
+                        <i class="fas fa-keyboard text-info me-2"></i>Keyboard Shortcuts
+                    </h3>
+                </div>
+                <div class="card-body-enhanced">
+                    <div class="d-flex flex-column gap-2">
+                        <div class="d-flex justify-content-between">
+                            <span>Navigate tables</span>
+                            <kbd>↑ ↓</kbd>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Close dialogs</span>
+                            <kbd>ESC</kbd>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Submit forms</span>
+                            <kbd>Enter</kbd>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Focus search</span>
+                            <kbd>Ctrl + K</kbd>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Tutorials -->
+            <div class="card-enhanced">
+                <div class="card-header-enhanced">
+                    <h3 class="h6 mb-0">
+                        <i class="fas fa-video text-success me-2"></i>Video Tutorials
+                    </h3>
+                </div>
+                <div class="card-body-enhanced">
+                    <div class="d-flex flex-column gap-3">
+                        <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-body">
+                            <div class="bg-light rounded p-2">
+                                <i class="fas fa-play-circle text-success"></i>
+                            </div>
+                            <div>
+                                <div class="fw-medium">Getting Started Guide</div>
+                                <small class="text-muted">5 min video</small>
+                            </div>
+                        </a>
+                        <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-body">
+                            <div class="bg-light rounded p-2">
+                                <i class="fas fa-play-circle text-success"></i>
+                            </div>
+                            <div>
+                                <div class="fw-medium">Viewing Attendance</div>
+                                <small class="text-muted">3 min video</small>
+                            </div>
+                        </a>
+                        <a href="#" class="d-flex align-items-center gap-3 text-decoration-none text-body">
+                            <div class="bg-light rounded p-2">
+                                <i class="fas fa-play-circle text-success"></i>
+                            </div>
+                            <div>
+                                <div class="fw-medium">Reporting Issues</div>
+                                <small class="text-muted">4 min video</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    kbd {
+        background: var(--color-bg-tertiary);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        padding: 2px 6px;
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-xs);
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: var(--color-primary-bg);
+        color: var(--color-primary);
+    }
+
+    .accordion-button:focus {
+        box-shadow: var(--focus-ring);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Smooth scroll to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Announce for screen readers
+                    A11yAnnouncer.announce('Navigated to ' + target.querySelector('h2')?.textContent);
+                }
+            });
+        });
+    </script>
+}

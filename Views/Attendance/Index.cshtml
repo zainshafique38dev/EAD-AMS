@@ -1,0 +1,392 @@
+@model IEnumerable<MessManagementSystem.Models.Attendance>
+
+@{
+    ViewData["Title"] = "Mark Teacher Meal Attendance";
+    var selectedDate = (DateTime)ViewBag.SelectedDate;
+    var allTeachers = (List<MessManagementSystem.Models.Teacher>)ViewBag.AllTeachers;
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li class="breadcrumb-item active">Attendance Management</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <form method="get" class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-calendar-alt"></i> Select Date
+                            </label>
+                            <input type="date" name="date" class="form-control form-control-lg" 
+                                   value="@selectedDate.ToString("yyyy-MM-dd")" required />
+                        </div>
+                        <div class="col-md-6 d-flex gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-search"></i> View Attendance
+                            </button>
+                            <a asp-action="Report" class="btn btn-info btn-lg">
+                                <i class="fas fa-chart-bar"></i> Monthly Report
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-primary text-white border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="mb-2"><i class="fas fa-calendar-day"></i> Selected Date</h5>
+                    <h3 class="mb-1 fw-bold">@selectedDate.ToString("MMM dd, yyyy")</h3>
+                    <h5 class="mb-0">
+                        <span class="badge bg-light text-primary px-3 py-2">
+                            @selectedDate.ToString("dddd")
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Meal Summary Statistics -->
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">
+                    <i class="fas fa-clipboard-check"></i> Mark Meal Attendance
+                </h5>
+                <small class="text-muted">
+                    Select which meals each teacher consumed on 
+                    <strong>@selectedDate.ToString("MMMM dd, yyyy")</strong> 
+                    (<strong>@selectedDate.ToString("dddd")</strong>)
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (Model != null && Model.Any())
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                Showing attendance for <strong>@selectedDate.ToString("MMMM dd, yyyy")</strong>. Click "Mark" button to update any teacher's attendance.
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                No attendance marked for <strong>@selectedDate.ToString("MMMM dd, yyyy")</strong>. Click "Mark" button to record attendance for teachers.
+            </div>
+        }
+
+        @if (allTeachers != null && allTeachers.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="attendanceTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 25%">Teacher Name</th>
+                            <th style="width: 20%">Department</th>
+                            <th class="text-center" style="width: 15%">
+                                <i class="fas fa-coffee text-warning"></i> Breakfast
+                            </th>
+                            <th class="text-center" style="width: 15%">
+                                <i class="fas fa-utensils text-success"></i> Lunch
+                            </th>
+                            <th class="text-center" style="width: 15%">
+                                <i class="fas fa-moon text-info"></i> Dinner
+                            </th>
+                            <th style="width: 10%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var index = 1;
+                        }
+                        @foreach (var teacher in allTeachers)
+                        {
+                            var attendance = Model?.FirstOrDefault(a => a.TeacherId == teacher.TeacherId);
+                            <tr>
+                                <td class="text-muted">@index</td>
+                                <td>
+                                    <strong>@teacher.FullName</strong><br />
+                                    <small class="text-muted">@teacher.Email</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">@teacher.Department</span>
+                                </td>
+                                <td class="text-center">
+                                    @if (attendance?.BreakfastTaken == true)
+                                    {
+                                        <span class="badge bg-success px-3 py-2">
+                                            <i class="fas fa-check"></i> Taken
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark px-3 py-2">
+                                            <i class="fas fa-times"></i> Not Taken
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if (attendance?.LunchTaken == true)
+                                    {
+                                        <span class="badge bg-success px-3 py-2">
+                                            <i class="fas fa-check"></i> Taken
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark px-3 py-2">
+                                            <i class="fas fa-times"></i> Not Taken
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if (attendance?.DinnerTaken == true)
+                                    {
+                                        <span class="badge bg-success px-3 py-2">
+                                            <i class="fas fa-check"></i> Taken
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark px-3 py-2">
+                                            <i class="fas fa-times"></i> Not Taken
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#attendanceModal"
+                                            onclick="openAttendanceModal(@teacher.TeacherId, '@teacher.FullName', '@teacher.Department', @(attendance?.BreakfastTaken.ToString().ToLower() ?? "false"), @(attendance?.LunchTaken.ToString().ToLower() ?? "false"), @(attendance?.DinnerTaken.ToString().ToLower() ?? "false"))">
+                                        <i class="fas fa-check"></i> Mark
+                                    </button>
+                                    @if (attendance != null)
+                                    {
+                                        <a asp-action="Edit" 
+                                           asp-route-id="@attendance.AttendanceId" 
+                                           asp-route-returnDate="@selectedDate.ToString("yyyy-MM-dd")"
+                                           class="btn btn-sm btn-warning ms-1" 
+                                           title="Edit Attendance">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-danger ms-1" 
+                                                onclick="confirmDelete(@attendance.AttendanceId, '@teacher.FullName', '@selectedDate.ToString("MMM dd, yyyy")')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-3 text-muted">
+                <small>
+                    <i class="fas fa-info-circle"></i>
+                    Total Teachers: <strong>@allTeachers.Count</strong> | 
+                    Marked Today: <strong>@(Model?.Count() ?? 0)</strong>
+                </small>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="fas fa-user-slash fa-3x mb-3"></i>
+                <h5>No Active Teachers Found</h5>
+                <p>Please add teachers from the Teacher Management section.</p>
+                <a asp-controller="Admin" asp-action="ManageTeachers" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Manage Teachers
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Attendance Modal -->
+<div class="modal fade" id="attendanceModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-utensils"></i> Mark Meal Attendance
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form asp-action="MarkAttendance" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="hidden" name="teacherId" id="teacherId" />
+                    <input type="hidden" name="date" value="@selectedDate.ToString("yyyy-MM-dd")" />
+                    
+                    <div class="alert alert-light border">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-user-circle fa-3x text-primary"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-0" id="teacherName"></h6>
+                                <small class="text-muted" id="teacherDept"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-calendar-day"></i> Date: 
+                            <span class="text-primary">@selectedDate.ToString("MMMM dd, yyyy")</span>
+                        </label>
+                        <br />
+                        <span class="badge bg-primary">@selectedDate.ToString("dddd")</span>
+                    </div>
+
+                    <hr />
+
+                    <h6 class="mb-3">Select Meals Consumed:</h6>
+                    
+                    <div class="card mb-3 border-warning">
+                        <div class="card-body">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="breakfast" id="breakfast" value="true" style="width: 3em; height: 1.5em;" />
+                                <label class="form-check-label ms-2" for="breakfast">
+                                    <i class="fas fa-coffee text-warning fa-lg"></i>
+                                    <strong class="ms-2">Breakfast</strong>
+                                    <br />
+                                    <small class="text-muted ms-4">Morning meal (Usually 7-10 AM)</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 border-success">
+                        <div class="card-body">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="lunch" id="lunch" value="true" style="width: 3em; height: 1.5em;" />
+                                <label class="form-check-label ms-2" for="lunch">
+                                    <i class="fas fa-utensils text-success fa-lg"></i>
+                                    <strong class="ms-2">Lunch</strong>
+                                    <br />
+                                    <small class="text-muted ms-4">Afternoon meal (Usually 12-3 PM)</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 border-info">
+                        <div class="card-body">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="dinner" id="dinner" value="true" style="width: 3em; height: 1.5em;" />
+                                <label class="form-check-label ms-2" for="dinner">
+                                    <i class="fas fa-moon text-info fa-lg"></i>
+                                    <strong class="ms-2">Dinner</strong>
+                                    <br />
+                                    <small class="text-muted ms-4">Evening meal (Usually 7-10 PM)</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <small><strong>Important:</strong> Please check at least one meal (Breakfast, Lunch, or Dinner). Checked meals will be added to the teacher's monthly bill.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Attendance
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Delete Attendance Record
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="deleteForm" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Warning:</strong> This action will delete the attendance record and adjust the bill accordingly.
+                    </div>
+                    <p id="deleteMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAttendanceModal(teacherId, teacherName, department, breakfast, lunch, dinner) {
+            document.getElementById('teacherId').value = teacherId;
+            document.getElementById('teacherName').textContent = teacherName;
+            document.getElementById('teacherDept').textContent = department;
+            document.getElementById('breakfast').checked = breakfast;
+            document.getElementById('lunch').checked = lunch;
+            document.getElementById('dinner').checked = dinner;
+        }
+
+        function confirmDelete(attendanceId, teacherName, date) {
+            var returnDate = '@selectedDate.ToString("yyyy-MM-dd")';
+            document.getElementById('deleteForm').action = '@Url.Action("Delete", "Attendance")/' + attendanceId + '?returnDate=' + returnDate;
+            document.getElementById('deleteMessage').innerHTML = 'Are you sure you want to delete attendance for <strong>' + teacherName + '</strong> on <strong>' + date + '</strong>?';
+            var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+        }
+    </script>
+}
+</div>

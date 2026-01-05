@@ -1,0 +1,104 @@
+@model MessManagementSystem.Models.BillingConfiguration
+
+@{
+    ViewData["Title"] = "Billing Configuration";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-cog"></i> Billing Configuration
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i> @ViewBag.Success
+                    </div>
+                }
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Note:</strong> These settings will be used to calculate monthly bills. Water bill is shared equally among all active teachers.
+                </div>
+
+                <form asp-action="Configuration" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ConfigId" />
+
+                    <h5 class="mb-3">Water Bill</h5>
+                    <div class="mb-4">
+                        <label asp-for="MonthlyWaterBillTotal" class="form-label">
+                            Monthly Water Bill Total (₹)
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">₹</span>
+                            <input asp-for="MonthlyWaterBillTotal" class="form-control" type="number" step="0.01" required />
+                        </div>
+                        <small class="form-text text-muted">
+                            This amount will be divided equally among all active teachers.
+                        </small>
+                        <span asp-validation-for="MonthlyWaterBillTotal" class="text-danger"></span>
+                    </div>
+
+                    <hr />
+
+                    <h5 class="mb-3">Default Meal Rates</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DefaultBreakfastRate" class="form-label">
+                                <i class="fas fa-coffee"></i> Breakfast Rate (₹)
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input asp-for="DefaultBreakfastRate" class="form-control" type="number" step="0.01" required />
+                            </div>
+                            <span asp-validation-for="DefaultBreakfastRate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DefaultLunchRate" class="form-label">
+                                <i class="fas fa-utensils"></i> Lunch Rate (₹)
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input asp-for="DefaultLunchRate" class="form-control" type="number" step="0.01" required />
+                            </div>
+                            <span asp-validation-for="DefaultLunchRate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DefaultDinnerRate" class="form-label">
+                                <i class="fas fa-moon"></i> Dinner Rate (₹)
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input asp-for="DefaultDinnerRate" class="form-control" type="number" step="0.01" required />
+                            </div>
+                            <span asp-validation-for="DefaultDinnerRate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Configuration
+                        </button>
+                    </div>
+                </form>
+
+                @if (Model != null && Model.LastUpdated != DateTime.MinValue)
+                {
+                    <div class="mt-4 pt-3 border-top">
+                        <small class="text-muted">
+                            Last updated: @Model.LastUpdated.ToString("MMMM dd, yyyy hh:mm tt")
+                        </small>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
